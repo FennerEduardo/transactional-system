@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using MassTransit;
 
-namespace mygherkinservice.Application.Sagas
+namespace transactionalsystem.Application.Sagas
 {
     public class PaymentSagaState : SagaStateMachineInstance
     {

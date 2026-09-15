@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace mygherkinservice.Infrastructure.Outbox
+namespace transactionalsystem.Infrastructure.Outbox
 {
     public enum OutboxStatus
     {

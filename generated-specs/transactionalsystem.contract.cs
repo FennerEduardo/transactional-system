@@ -1,10 +1,10 @@
 /* ==========================================================================
    Generated Strongly-Typed DDD Contracts & Base Classes
-   Feature: Plataforma Transaccional Distribuida Event-Driven
-   Namespace: mygherkinservice.Domain.PlataformaTransaccionalDistribuidaEventDriven
+   Feature: Transactional System
+   Namespace: transactionalsystem.Domain.TransactionalSystem
    ========================================================================== */
 
-namespace mygherkinservice.Domain.PlataformaTransaccionalDistribuidaEventDriven;
+namespace transactionalsystem.Domain.TransactionalSystem;
 
 using System;
 using System.Collections.Generic;
@@ -58,59 +58,17 @@ public abstract class ValueObject
 // --------------------------------------------------------------------------
 // 2. Strongly-Typed Domain Event Records
 // --------------------------------------------------------------------------
-public record aOrderCreatedEventispublishedwithauniqueCorrelationIdEvent(
+public record TransactionalSystemProcessedEvent(
     Guid EventId,
     DateTime OccurredOn,
     Guid AggregateId,
     string Details
-) : IDomainEvent { public string EventType => nameof(aOrderCreatedEventispublishedwithauniqueCorrelationIdEvent); }
-
-public record anexistingwebhookeventwithMessageIdabc123Event(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(anexistingwebhookeventwithMessageIdabc123Event); }
-
-public record thesystemreceivesaduplicatewebhookeventwithMessageIdabc123Event(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(thesystemreceivesaduplicatewebhookeventwithMessageIdabc123Event); }
-
-public record thesystemignorestheduplicateeventEvent(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(thesystemignorestheduplicateeventEvent); }
-
-public record theCustomerUpdatedEventispublishedEvent(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(theCustomerUpdatedEventispublishedEvent); }
-
-public record anOutboxeventissafelypersistedEvent(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(anOutboxeventissafelypersistedEvent); }
-
-public record theoutboxrelayeventuallypublishestheeventtothemessagebrokerEvent(
-    Guid EventId,
-    DateTime OccurredOn,
-    Guid AggregateId,
-    string Details
-) : IDomainEvent { public string EventType => nameof(theoutboxrelayeventuallypublishestheeventtothemessagebrokerEvent); }
+) : IDomainEvent { public string EventType => nameof(TransactionalSystemProcessedEvent); }
 
 // --------------------------------------------------------------------------
 // 3. Strongly-Typed Command & Query Records
 // --------------------------------------------------------------------------
-public record CreatePlataformaTransaccionalDistribuidaEventDrivenCommand(
+public record CreateTransactionalSystemCommand(
     Guid RequestId,
     Guid TenantId,
     DateTime Timestamp,
@@ -118,34 +76,34 @@ public record CreatePlataformaTransaccionalDistribuidaEventDrivenCommand(
     decimal Amount
 );
 
-public record GetPlataformaTransaccionalDistribuidaEventDrivenQuery(
-    Guid PlataformaTransaccionalDistribuidaEventDrivenId,
+public record GetTransactionalSystemQuery(
+    Guid TransactionalSystemId,
     Guid TenantId
 );
 
 // --------------------------------------------------------------------------
 // 4. Strongly-Typed Domain Repository Port
 // --------------------------------------------------------------------------
-public interface IPlataformaTransaccionalDistribuidaEventDrivenRepository
+public interface ITransactionalSystemRepository
 {
-    Task<PlataformaTransaccionalDistribuidaEventDrivenAggregate?> FindByIdAsync(Guid id);
-    Task SaveAsync(PlataformaTransaccionalDistribuidaEventDrivenAggregate entity);
+    Task<TransactionalSystemAggregate?> FindByIdAsync(Guid id);
+    Task SaveAsync(TransactionalSystemAggregate entity);
     Task DeleteAsync(Guid id);
 }
 
-public class PlataformaTransaccionalDistribuidaEventDrivenAggregate : AggregateRoot<Guid>
+public class TransactionalSystemAggregate : AggregateRoot<Guid>
 {
     public string ReferenceCode { get; private set; } = string.Empty;
     public decimal Amount { get; private set; }
 
-    public PlataformaTransaccionalDistribuidaEventDrivenAggregate() { }
+    public TransactionalSystemAggregate() { }
 
-    public PlataformaTransaccionalDistribuidaEventDrivenAggregate(Guid id, string referenceCode, decimal amount)
+    public TransactionalSystemAggregate(Guid id, string referenceCode, decimal amount)
     {
         Id = id;
         ReferenceCode = referenceCode;
         Amount = amount;
-        ApplyChange(new PlataformaTransaccionalDistribuidaEventDrivenProcessedEvent(Guid.NewGuid(), DateTime.UtcNow, Id, $"Created PlataformaTransaccionalDistribuidaEventDriven"));
+        ApplyChange(new TransactionalSystemProcessedEvent(Guid.NewGuid(), DateTime.UtcNow, Id, $"Created TransactionalSystem"));
     }
 }
 

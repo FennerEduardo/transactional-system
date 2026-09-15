@@ -22,9 +22,10 @@ protectedPaths:
   - kubernetes/**
 maxFilesPerTask: 12
 prohibitedImports:
-  csharp:
-    - System.Data.SqlClient unparameterized queries
-    - Direct HttpContext coupling in domain layer
+  php:
+    - laravel/framework
+    - symfony/symfony
+    - illuminate/*
 requireHumanApprovalOn:
   - docker-compose.yml
   - package.json
@@ -48,6 +49,5 @@ requireHumanApprovalOn:
   - "*.tf"
   - kubernetes/**
   - helm/**
-  - appsettings.json
-  - Program.cs
+  - schema.sql
   - migrations/**

@@ -1,32 +1,17 @@
-@transactional @event-driven
-Feature: Plataforma Transaccional Distribuida Event-Driven
-  Como un usuario del sistema transaccional
-  Quiero que el sistema procese pagos y eventos de forma distribuida
-  Para garantizar escalabilidad, resiliencia e idempotencia
+Feature: Transactional System
+  As a system user or business manager
+  I want to process and manage transactional system operations
+  So that data integrity and business rules are enforced across the application
 
-  # Glossary
-  # Order: A commercial transaction request by a customer.
-  # Command: An intent to change the state of the system.
-  # Webhook: An HTTP callback triggered by an external event.
-  # Idempotency: The property of an operation that can be applied multiple times without changing the result beyond the initial application.
+  Scenario: Process transactional system successfully
+    Given a valid transactional system request with required payload
+    When processing transactional system request
+    Then the system responds with HTTP status 200 OK
+    And stores record in database
+    And emits a "TransactionalSystemProcessed" domain event
 
-  Background:
-    Given a valid customer
-
-  @happy-path @observability
-  Scenario: A valid Order is placed via the API
-    When the customer creates an order
-    Then the order should be created
-    And a "OrderCreatedEvent" is published with a unique CorrelationId
-
-  @idempotency
-  Scenario: The system receives a duplicate Webhook event
-    Given an existing webhook event with MessageId "abc123"
-    When the system receives a duplicate webhook event with MessageId "abc123"
-    Then the system ignores the duplicate event
-
-  @outbox
-  Scenario: The system publishes a Domain Event using the Outbox Pattern
-    When the "CustomerUpdatedEvent" is published
-    Then an Outbox event is safely persisted
-    And the outbox relay eventually publishes the event to the message broker
+  Scenario: Reject transactional system with invalid parameters
+    Given an invalid transactional system request with missing fields
+    When processing transactional system request
+    Then the system responds with HTTP status 400 Bad Request
+    And returns validation error details

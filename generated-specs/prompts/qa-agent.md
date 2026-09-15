@@ -9,9 +9,8 @@ Objective: Implement automated tests using xUnit, Moq, and FluentAssertions.
 - Use WebApplicationFactory for integration tests.
 
 🎯 Scenarios to Fulfill:
-1. "A valid Order is placed via the API"
-2. "The system receives a duplicate Webhook event"
-3. "The system publishes a Domain Event using the Outbox Pattern"
+1. "Process transactional system successfully"
+2. "Reject transactional system with invalid parameters"
 
 🎯 Testing Deliverables:
 1. Unit tests with Moq.

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace mygherkinservice.Application.Behaviors
+namespace transactionalsystem.Application.Behaviors
 {
     public interface IIdempotentRequest
     {

@@ -1,5 +1,5 @@
 {
-  "name": "my-gherkin-service-infra",
+  "name": "transactional-system-infra",
   "version": "0.1.0",
   "dependencies": {
     "aws-cdk-lib": "2.100.0",

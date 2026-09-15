@@ -1,13 +1,14 @@
 {
-  "projectName": "my-gherkin-service",
+  "projectName": "transactional-system",
   "architecture": "cqrs",
+  "domainProfile": "financial",
   "stack": {
     "language": "csharp",
     "framework": "dotnet-aspnetcore",
     "orm": "entity-framework-core",
     "database": "postgresql",
-    "validation": "fluent-validation",
-    "auth": "jwt-bcrypt",
+    "validation": "fluentvalidation",
+    "auth": "jwt",
     "messaging": "sqs",
     "testing": "xunit"
   },

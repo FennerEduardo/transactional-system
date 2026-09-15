@@ -1,4 +1,4 @@
-namespace mygherkinservice.Domain.Entities;
+namespace transactionalsystem.Domain.Entities;
 
 using System;
 using System.Collections.Generic;
@@ -20,11 +20,11 @@ public interface IRepository<TEntity, TId>
     Task AddAsync(TEntity entity);
 }
 
-public class PlataformaTransaccionalDistribuidaEventDriven : AggregateRoot<Guid>
+public class TransactionalSystem : AggregateRoot<Guid>
 {
     public string ReferenceCode { get; private set; } = string.Empty;
 
-    public PlataformaTransaccionalDistribuidaEventDriven(string referenceCode)
+    public TransactionalSystem(string referenceCode)
     {
         Id = Guid.NewGuid();
         ReferenceCode = referenceCode;

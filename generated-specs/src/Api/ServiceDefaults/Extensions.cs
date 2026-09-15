@@ -8,7 +8,7 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace mygherkinservice.ServiceDefaults;
+namespace transactionalsystem.ServiceDefaults;
 
 public static class Extensions
 {

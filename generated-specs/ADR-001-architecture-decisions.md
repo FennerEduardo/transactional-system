@@ -1,4 +1,4 @@
-# ADR 001: Architecture Decisions for Plataforma Transaccional Distribuida Event-Driven
+# ADR 001: Architecture Decisions for Transactional System
 
 ## Status
 Accepted
@@ -11,8 +11,8 @@ Project requiring structured implementation matching Gherkin specification.
 - **Primary Backend Language**: csharp
 - **Backend Framework**: dotnet-aspnetcore (.NET 8.0 / 9.0 / 10.0)
 - **ORM / Persistence**: entity-framework-core (Microsoft.EntityFrameworkCore 8.0/9.0/10.0)
-- **Validation**: fluent-validation (FluentValidation 11.9)
-- **Authentication**: jwt-bcrypt (bcrypt cost factor 12, JWT TTL 3600s)
+- **Validation**: fluentvalidation (FluentValidation 11.9)
+- **Authentication**: jwt (bcrypt cost factor 12, JWT TTL 3600s)
 - **Backend Testing Framework**: xunit (xunit 2.7.0)
 
 ## Prohibited Layer Dependencies

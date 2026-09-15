@@ -12,7 +12,7 @@ using Testcontainers.PostgreSql;
 using Testcontainers.RabbitMq;
 using Xunit;
 
-namespace mygherkinservice.IntegrationTests
+namespace transactionalsystem.IntegrationTests
 {
     public class DistributedSystemIntegrationTest : IAsyncLifetime
     {

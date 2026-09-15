@@ -4,10 +4,10 @@ Objective: Implement domain entities and ports in C# 10+.
 > [!IMPORTANT]
 > User prefers Spanish. Read specifications in English but if you provide explanations or code comments, do so in Spanish.
 
-📌 Feature Specification: Plataforma Transaccional Distribuida Event-Driven
-> Como un usuario del sistema transaccional
-> Quiero que el sistema procese pagos y eventos de forma distribuida
-> Para garantizar escalabilidad, resiliencia e idempotencia
+📌 Feature Specification: Transactional System
+> As a system user or business manager
+> I want to process and manage transactional system operations
+> So that data integrity and business rules are enforced across the application
 
 🏗️ Strict Architectural Patterns:
 - Command Handler
@@ -34,9 +34,8 @@ src/
       └── schemas/
 
 🎯 Scenarios to Fulfill:
-1. "A valid Order is placed via the API"
-2. "The system receives a duplicate Webhook event"
-3. "The system publishes a Domain Event using the Outbox Pattern"
+1. "Process transactional system successfully"
+2. "Reject transactional system with invalid parameters"
 
 Must Output:
 1. Pure C# classes/records for Entities/Aggregates

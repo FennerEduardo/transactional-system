@@ -4,13 +4,13 @@ services:
   # Host Environment SDK Isolation Sandbox
   app:
     image: mcr.microsoft.com/dotnet/sdk:8.0
-    container_name: my-gherkin-service-app
+    container_name: transactional-system-app
     volumes:
       - .:/app
     working_dir: /app
     environment:
       - ENVIRONMENT=development
-      - DATABASE_URL=postgresql://dev_user:dev_password@postgresql:5432/my-gherkin-service_db
+      - DATABASE_URL=postgresql://dev_user:dev_password@postgresql:5432/transactional-system_db
     ports:
       - "8000:8000"
     depends_on:
@@ -19,30 +19,32 @@ services:
   # Database Service (postgresql)
   postgresql:
     image: postgres:16-alpine
-    container_name: my-gherkin-service-db
+    container_name: transactional-system-db
     restart: always
     environment:
-      POSTGRES_DB: my-gherkin-service_db
+      POSTGRES_DB: transactional-system_db
       POSTGRES_USER: dev_user
       POSTGRES_PASSWORD: dev_password
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/data
+      - db_data:/var/lib/postgresql/data
 
+  
   # Message Broker
   sqs:
-    image: rabbitmq:3-management-alpine
-    container_name: my-gherkin-service-mq
+    image: localstack/localstack
+    container_name: transactional-system-mq
     restart: always
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "4566:4566"
+      
+  
 
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: my-gherkin-service-redis
+    container_name: transactional-system-redis
     ports:
       - "6379:6379"
 
