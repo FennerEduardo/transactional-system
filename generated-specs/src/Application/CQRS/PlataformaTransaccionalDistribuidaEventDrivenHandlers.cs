@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace transactionalsystem.Application.Handlers
+namespace mygherkinservice.Application.Handlers
 {
     public record CommandResult(bool Success, string Message, Guid? EntityId);
 

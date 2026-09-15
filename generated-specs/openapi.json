@@ -9,7 +9,7 @@
     "/api/v1/plataforma-transaccional-distribuida-event-driven": {
       "post": {
         "summary": "POST /api/v1/plataforma-transaccional-distribuida-event-driven",
-        "operationId": "unknownPlataformaTransaccionalDistribuidaEventDriven",
+        "operationId": "createPlataformaTransaccionalDistribuidaEventDriven",
         "security": [],
         "requestBody": {
           "required": true,
@@ -29,13 +29,7 @@
                   "payload": {
                     "type": "object",
                     "properties": {
-                      "from": {
-                        "type": "string"
-                      },
                       "a": {
-                        "type": "string"
-                      },
-                      "to": {
                         "type": "string"
                       },
                       "messageid": {
@@ -46,9 +40,7 @@
                       }
                     },
                     "required": [
-                      "from",
                       "a",
-                      "to",
                       "messageid",
                       "the"
                     ]

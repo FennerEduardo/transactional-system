@@ -9,10 +9,10 @@ Project requiring structured implementation matching Gherkin specification.
 ## Decisions
 - **Architecture Style**: CQRS + Event Sourcing (cqrs)
 - **Primary Backend Language**: csharp
-- **Backend Framework**: dotnet10 (.NET 8.0 / 9.0 / 10.0)
-- **ORM / Persistence**: ef-core (Dapper 2.1)
+- **Backend Framework**: dotnet-aspnetcore (.NET 8.0 / 9.0 / 10.0)
+- **ORM / Persistence**: entity-framework-core (Microsoft.EntityFrameworkCore 8.0/9.0/10.0)
 - **Validation**: fluent-validation (FluentValidation 11.9)
-- **Authentication**: jwt (bcrypt cost factor 12, JWT TTL 3600s)
+- **Authentication**: jwt-bcrypt (bcrypt cost factor 12, JWT TTL 3600s)
 - **Backend Testing Framework**: xunit (xunit 2.7.0)
 
 ## Prohibited Layer Dependencies

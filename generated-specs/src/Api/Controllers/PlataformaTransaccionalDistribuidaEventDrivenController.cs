@@ -1,10 +1,10 @@
-namespace transactionalsystem.Api.Controllers;
+namespace mygherkinservice.Api.Controllers;
 
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using transactionalsystem.Application.Commands;
+using mygherkinservice.Application.Commands;
 
 [ApiController]
 [Route("api/v1/[controller]")]

@@ -5,15 +5,9 @@ Objective: Implement domain entities and ports in C# 10+.
 > User prefers Spanish. Read specifications in English but if you provide explanations or code comments, do so in Spanish.
 
 📌 Feature Specification: Plataforma Transaccional Distribuida Event-Driven
-> Como plataforma central de e-commerce
-> Quiero integrar canales y ejecutar operaciones transaccionales
-> Para procesar pedidos, pagos y clientes de forma confiable
-> Glossary:
-> - COMPLETED: Final success state of an order
-> - DLQ: Dead Letter Queue for failed messages
-> - OPEN: Circuit breaker state when failing fast
-> - FAILED: Final error state of an order
-> - PROCESSED: Idempotency state indicating success
+> Como un usuario del sistema transaccional
+> Quiero que el sistema procese pagos y eventos de forma distribuida
+> Para garantizar escalabilidad, resiliencia e idempotencia
 
 🏗️ Strict Architectural Patterns:
 - Command Handler
@@ -40,10 +34,9 @@ src/
       └── schemas/
 
 🎯 Scenarios to Fulfill:
-1. "Creación y procesamiento de un pedido exitoso (Saga Happy Path)"
-2. "Error handling por indisponibilidad de la pasarela externa"
-3. "Detección y rechazo de eventos duplicados"
-4. "Audit logging and Outbox emission"
+1. "A valid Order is placed via the API"
+2. "The system receives a duplicate Webhook event"
+3. "The system publishes a Domain Event using the Outbox Pattern"
 
 Must Output:
 1. Pure C# classes/records for Entities/Aggregates

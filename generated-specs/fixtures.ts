@@ -6,9 +6,7 @@
 
 export interface PlataformaTransaccionalDistribuidaEventDrivenFixture {
   id: string;
-  from: string;
   a: string;
-  to: string;
   messageid: string;
   the: string;
 }
@@ -16,9 +14,7 @@ export interface PlataformaTransaccionalDistribuidaEventDrivenFixture {
 export function createPlataformaTransaccionalDistribuidaEventDrivenFixture(): PlataformaTransaccionalDistribuidaEventDrivenFixture {
   return {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-    from: 'test_value',
     a: 'test_value',
-    to: 'test_value',
     messageid: 'test_value',
     the: 'test_value',
   };

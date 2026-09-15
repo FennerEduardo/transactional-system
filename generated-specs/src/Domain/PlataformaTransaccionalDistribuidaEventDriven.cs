@@ -1,4 +1,4 @@
-namespace transactionalsystem.Domain.Entities;
+namespace mygherkinservice.Domain.Entities;
 
 using System;
 using System.Collections.Generic;

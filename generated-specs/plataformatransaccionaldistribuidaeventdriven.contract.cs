@@ -1,10 +1,10 @@
 /* ==========================================================================
    Generated Strongly-Typed DDD Contracts & Base Classes
    Feature: Plataforma Transaccional Distribuida Event-Driven
-   Namespace: transactionalsystem.Domain.PlataformaTransaccionalDistribuidaEventDriven
+   Namespace: mygherkinservice.Domain.PlataformaTransaccionalDistribuidaEventDriven
    ========================================================================== */
 
-namespace transactionalsystem.Domain.PlataformaTransaccionalDistribuidaEventDriven;
+namespace mygherkinservice.Domain.PlataformaTransaccionalDistribuidaEventDriven;
 
 using System;
 using System.Collections.Generic;
@@ -58,26 +58,26 @@ public abstract class ValueObject
 // --------------------------------------------------------------------------
 // 2. Strongly-Typed Domain Event Records
 // --------------------------------------------------------------------------
-public record aOrderCreatedeventispublishedwithauniqueCorrelationIdEvent(
+public record aOrderCreatedEventispublishedwithauniqueCorrelationIdEvent(
     Guid EventId,
     DateTime OccurredOn,
     Guid AggregateId,
     string Details
-) : IDomainEvent { public string EventType => nameof(aOrderCreatedeventispublishedwithauniqueCorrelationIdEvent); }
+) : IDomainEvent { public string EventType => nameof(aOrderCreatedEventispublishedwithauniqueCorrelationIdEvent); }
 
-public record anexistingwebhookeventwithMessageIdABC123Event(
+public record anexistingwebhookeventwithMessageIdabc123Event(
     Guid EventId,
     DateTime OccurredOn,
     Guid AggregateId,
     string Details
-) : IDomainEvent { public string EventType => nameof(anexistingwebhookeventwithMessageIdABC123Event); }
+) : IDomainEvent { public string EventType => nameof(anexistingwebhookeventwithMessageIdabc123Event); }
 
-public record thesystemreceivesaduplicatewebhookeventwithMessageIdABC123Event(
+public record thesystemreceivesaduplicatewebhookeventwithMessageIdabc123Event(
     Guid EventId,
     DateTime OccurredOn,
     Guid AggregateId,
     string Details
-) : IDomainEvent { public string EventType => nameof(thesystemreceivesaduplicatewebhookeventwithMessageIdABC123Event); }
+) : IDomainEvent { public string EventType => nameof(thesystemreceivesaduplicatewebhookeventwithMessageIdabc123Event); }
 
 public record thesystemignorestheduplicateeventEvent(
     Guid EventId,
@@ -86,6 +86,13 @@ public record thesystemignorestheduplicateeventEvent(
     string Details
 ) : IDomainEvent { public string EventType => nameof(thesystemignorestheduplicateeventEvent); }
 
+public record theCustomerUpdatedEventispublishedEvent(
+    Guid EventId,
+    DateTime OccurredOn,
+    Guid AggregateId,
+    string Details
+) : IDomainEvent { public string EventType => nameof(theCustomerUpdatedEventispublishedEvent); }
+
 public record anOutboxeventissafelypersistedEvent(
     Guid EventId,
     DateTime OccurredOn,
@@ -93,12 +100,12 @@ public record anOutboxeventissafelypersistedEvent(
     string Details
 ) : IDomainEvent { public string EventType => nameof(anOutboxeventissafelypersistedEvent); }
 
-public record theCustomerUpdatedeventispublishedEvent(
+public record theoutboxrelayeventuallypublishestheeventtothemessagebrokerEvent(
     Guid EventId,
     DateTime OccurredOn,
     Guid AggregateId,
     string Details
-) : IDomainEvent { public string EventType => nameof(theCustomerUpdatedeventispublishedEvent); }
+) : IDomainEvent { public string EventType => nameof(theoutboxrelayeventuallypublishestheeventtothemessagebrokerEvent); }
 
 // --------------------------------------------------------------------------
 // 3. Strongly-Typed Command & Query Records

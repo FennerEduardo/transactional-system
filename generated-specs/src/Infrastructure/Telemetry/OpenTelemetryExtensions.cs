@@ -9,7 +9,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 
-namespace transactionalsystem.Infrastructure.Telemetry
+namespace mygherkinservice.Infrastructure.Telemetry
 {
     public static class OpenTelemetryExtensions
     {

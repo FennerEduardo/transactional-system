@@ -1,8 +1,8 @@
-namespace transactionalsystem.Infrastructure.Repositories;
+namespace mygherkinservice.Infrastructure.Repositories;
 
 using System;
 using System.Threading.Tasks;
-using transactionalsystem.Domain.Entities;
+using mygherkinservice.Domain.Entities;
 
 public class PlataformaTransaccionalDistribuidaEventDrivenRepository : IRepository<PlataformaTransaccionalDistribuidaEventDriven, Guid>
 {

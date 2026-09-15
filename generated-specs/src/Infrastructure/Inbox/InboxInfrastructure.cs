@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace transactionalsystem.Infrastructure.Inbox
+namespace mygherkinservice.Infrastructure.Inbox
 {
     public class InboxMessage
     {

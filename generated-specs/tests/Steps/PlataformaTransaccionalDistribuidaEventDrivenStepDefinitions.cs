@@ -2,64 +2,37 @@
 using System;
 using TechTalk.SpecFlow;
 
-namespace transactionalsystem.Tests.Steps
+namespace mygherkinservice.Tests.Steps
 {
     [Binding]
     public class PlataformaTransaccionalDistribuidaEventDrivenStepDefinitions
     {
 
-        // Scenario: Creación y procesamiento de un pedido exitoso (Saga Happy Path)
+        // Scenario: A valid Order is placed via the API
 
-        [Given("a valid order payload from ""External E-Commerce""")]
-        public void GivenavalidorderpayloadfromExternalECommerce()
+        [When("the customer creates an order")]
+        public void Whenthecustomercreatesanorder()
         {
             // TODO: Implement step
         }
 
-        [When("the system receives the order creation request")]
-        public void Whenthesystemreceivestheordercreationrequest()
-        {
-            // TODO: Implement step
-        }
-
-        [Then("a ""OrderCreated"" event is published with a unique CorrelationId")]
-        public void ThenaOrderCreatedeventispublishedwithauniqueCorrelationId()
+        [Then("the order should be created")]
+        public void Thentheordershouldbecreated()
         {
             // TODO: Implement step
         }
 
 
-        // Scenario: Error handling por indisponibilidad de la pasarela externa
+        // Scenario: The system receives a duplicate Webhook event
 
-        [Given("an order in pending state")]
-        public void Givenanorderinpendingstate()
+        [Given("an existing webhook event with MessageId ""abc123""")]
+        public void GivenanexistingwebhookeventwithMessageIdabc123()
         {
             // TODO: Implement step
         }
 
-        [When("the external gateway experiences high latency")]
-        public void Whentheexternalgatewayexperienceshighlatency()
-        {
-            // TODO: Implement step
-        }
-
-        [Then("the system applies exponential backoff for retries")]
-        public void Thenthesystemappliesexponentialbackoffforretries()
-        {
-            // TODO: Implement step
-        }
-
-
-        // Scenario: Detección y rechazo de eventos duplicados
-
-        [Given("an existing webhook event with MessageId ""ABC123""")]
-        public void GivenanexistingwebhookeventwithMessageIdABC123()
-        {
-            // TODO: Implement step
-        }
-
-        [When("the system receives a duplicate webhook event with MessageId ""ABC123""")]
-        public void WhenthesystemreceivesaduplicatewebhookeventwithMessageIdABC123()
+        [When("the system receives a duplicate webhook event with MessageId ""abc123""")]
+        public void WhenthesystemreceivesaduplicatewebhookeventwithMessageIdabc123()
         {
             // TODO: Implement step
         }
@@ -71,16 +44,10 @@ namespace transactionalsystem.Tests.Steps
         }
 
 
-        // Scenario: Audit logging and Outbox emission
+        // Scenario: The system publishes a Domain Event using the Outbox Pattern
 
-        [Given("a valid customer update request")]
-        public void Givenavalidcustomerupdaterequest()
-        {
-            // TODO: Implement step
-        }
-
-        [When("the aggregate state is updated")]
-        public void Whentheaggregatestateisupdated()
+        [When("the ""CustomerUpdatedEvent"" is published")]
+        public void WhentheCustomerUpdatedEventispublished()
         {
             // TODO: Implement step
         }

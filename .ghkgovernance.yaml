@@ -1,5 +1,5 @@
 version: "1.0"
-projectName: transactional-system
+projectName: my-gherkin-service
 allowedPaths:
   - specs/**
   - tests/**
@@ -17,13 +17,37 @@ protectedPaths:
   - node_modules/**
   - vendor/**
   - .git/**
+  - .github/workflows/**
+  - terraform/**
+  - kubernetes/**
 maxFilesPerTask: 12
 prohibitedImports:
-  php:
-    - laravel/framework
-    - symfony/symfony
-    - illuminate/*
+  csharp:
+    - System.Data.SqlClient unparameterized queries
+    - Direct HttpContext coupling in domain layer
 requireHumanApprovalOn:
   - docker-compose.yml
-  - schema.sql
+  - package.json
+  - package-lock.json
+  - yarn.lock
+  - pnpm-lock.yaml
+  - "*.csproj"
+  - pom.xml
+  - build.gradle
+  - requirements.txt
+  - pyproject.toml
+  - go.mod
+  - go.sum
+  - Gemfile
+  - composer.json
+  - composer.lock
+  - .github/workflows/**
+  - .gitlab-ci.yml
+  - Jenkinsfile
+  - terraform/**
+  - "*.tf"
+  - kubernetes/**
+  - helm/**
+  - appsettings.json
+  - Program.cs
   - migrations/**

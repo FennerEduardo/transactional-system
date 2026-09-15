@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
-namespace transactionalsystem.Infrastructure.Realtime
+namespace mygherkinservice.Infrastructure.Realtime
 {
     public interface IDomainEventClient
     {

@@ -13,7 +13,7 @@ var rabbitmq = builder.AddRabbitMQ("messaging");
 var redis = builder.AddRedis("cache");
 
 // .NET Microservice
-builder.AddProject<transactionalsystem_ApiService>("apiservice")
+builder.AddProject<mygherkinservice_ApiService>("apiservice")
     .WithReference(postgres)
     .WithReference(rabbitmq)
     .WithReference(redis);

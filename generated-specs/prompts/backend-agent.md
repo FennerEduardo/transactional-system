@@ -16,10 +16,9 @@ Objective: Implement ASP.NET Core Controllers, MediatR Handlers, and EF Core rep
 - Use FluentValidation rules instead of Data Annotations.
 
 🎯 Scenarios to Fulfill:
-1. "Creación y procesamiento de un pedido exitoso (Saga Happy Path)"
-2. "Error handling por indisponibilidad de la pasarela externa"
-3. "Detección y rechazo de eventos duplicados"
-4. "Audit logging and Outbox emission"
+1. "A valid Order is placed via the API"
+2. "The system receives a duplicate Webhook event"
+3. "The system publishes a Domain Event using the Outbox Pattern"
 
 ## [MANDATORY] Enterprise Security & Compliance
 - SAST Guidelines: Do NOT generate code susceptible to SQL injection, XSS, or CSRF. Use parameterized queries and ORM functions securely.

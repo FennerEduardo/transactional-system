@@ -6,9 +6,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace transactionalsystem.Application.Behaviors
+namespace mygherkinservice.Application.Behaviors
 {
     public interface IIdempotentRequest
     {
@@ -66,6 +68,55 @@ namespace transactionalsystem.Application.Behaviors
             await _store.SaveAsync(record);
 
             return response;
+        }
+    }
+
+    public class IdempotentHttpAttribute : Attribute, IAsyncActionFilter
+    {
+        private readonly string _headerName;
+
+        public IdempotentHttpAttribute(string headerName = "X-Idempotency-Key")
+        {
+            _headerName = headerName;
+        }
+
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            if (!context.HttpContext.Request.Headers.TryGetValue(_headerName, out var keyValues))
+            {
+                await next();
+                return;
+            }
+
+            var key = keyValues.ToString();
+            var store = context.HttpContext.RequestServices.GetService(typeof(IIdempotencyStore)) as IIdempotencyStore;
+            if (store != null)
+            {
+                var existing = await store.GetAsync(key);
+                if (existing != null)
+                {
+                    context.Result = new ContentResult
+                    {
+                        StatusCode = existing.StatusCode,
+                        ContentType = "application/json",
+                        Content = existing.ResponsePayload ?? "{}"
+                    };
+                    return;
+                }
+            }
+
+            var executed = await next();
+            if (store != null && executed.Result is ObjectResult objectResult)
+            {
+                var record = new IdempotencyRecord
+                {
+                    IdempotencyKey = key,
+                    Path = context.HttpContext.Request.Path,
+                    StatusCode = objectResult.StatusCode ?? 200,
+                    ResponsePayload = JsonSerializer.Serialize(objectResult.Value)
+                };
+                await store.SaveAsync(record);
+            }
         }
     }
 }

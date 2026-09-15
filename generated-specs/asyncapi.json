@@ -27,9 +27,9 @@
         }
       },
       "publish": {
-        "summary": "Publish aOrderCreatedeventispublishedwithauniqueCorrelationId event",
+        "summary": "Publish aOrderCreatedEventispublishedwithauniqueCorrelationId event",
         "message": {
-          "name": "aOrderCreatedeventispublishedwithauniqueCorrelationId",
+          "name": "aOrderCreatedEventispublishedwithauniqueCorrelationId",
           "correlationId": {
             "description": "Correlation ID set in the header",
             "location": "$message.header#/correlationId"
@@ -79,19 +79,13 @@
               "eventType": {
                 "type": "string",
                 "enum": [
-                  "aOrderCreatedeventispublishedwithauniqueCorrelationId"
+                  "aOrderCreatedEventispublishedwithauniqueCorrelationId"
                 ]
               },
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -102,9 +96,7 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
                   "messageid",
                   "the"
                 ]
@@ -140,9 +132,9 @@
         }
       },
       "publish": {
-        "summary": "Publish anexistingwebhookeventwithMessageIdABC123 event",
+        "summary": "Publish anexistingwebhookeventwithMessageIdabc123 event",
         "message": {
-          "name": "anexistingwebhookeventwithMessageIdABC123",
+          "name": "anexistingwebhookeventwithMessageIdabc123",
           "correlationId": {
             "description": "Correlation ID set in the header",
             "location": "$message.header#/correlationId"
@@ -192,19 +184,13 @@
               "eventType": {
                 "type": "string",
                 "enum": [
-                  "anexistingwebhookeventwithMessageIdABC123"
+                  "anexistingwebhookeventwithMessageIdabc123"
                 ]
               },
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -215,9 +201,7 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
                   "messageid",
                   "the"
                 ]
@@ -253,9 +237,9 @@
         }
       },
       "publish": {
-        "summary": "Publish thesystemreceivesaduplicatewebhookeventwithMessageIdABC123 event",
+        "summary": "Publish thesystemreceivesaduplicatewebhookeventwithMessageIdabc123 event",
         "message": {
-          "name": "thesystemreceivesaduplicatewebhookeventwithMessageIdABC123",
+          "name": "thesystemreceivesaduplicatewebhookeventwithMessageIdabc123",
           "correlationId": {
             "description": "Correlation ID set in the header",
             "location": "$message.header#/correlationId"
@@ -305,19 +289,13 @@
               "eventType": {
                 "type": "string",
                 "enum": [
-                  "thesystemreceivesaduplicatewebhookeventwithMessageIdABC123"
+                  "thesystemreceivesaduplicatewebhookeventwithMessageIdabc123"
                 ]
               },
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -328,9 +306,7 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
                   "messageid",
                   "the"
                 ]
@@ -424,13 +400,7 @@
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -441,9 +411,112 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/thecustomerupdatedeventispublished": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish theCustomerUpdatedEventispublished event",
+        "message": {
+          "name": "theCustomerUpdatedEventispublished",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "theCustomerUpdatedEventispublished"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "a",
                   "messageid",
                   "the"
                 ]
@@ -537,13 +610,7 @@
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -554,9 +621,7 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
                   "messageid",
                   "the"
                 ]
@@ -572,12 +637,12 @@
         }
       }
     },
-    "plataformatransaccionaldistribuidaeventdriven/events/thecustomerupdatedeventispublished": {
+    "plataformatransaccionaldistribuidaeventdriven/events/theoutboxrelayeventuallypublishestheeventtothemessagebroker": {
       "bindings": {
         "rabbitmq": {
           "is": "routingKey",
           "queue": {
-            "name": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished.queue",
+            "name": "plataformatransaccionaldistribuidaeventdriven.theoutboxrelayeventuallypublishestheeventtothemessagebroker.queue",
             "durable": true,
             "exclusive": false,
             "autoDelete": false
@@ -585,16 +650,16 @@
           "bindingVersion": "0.2.0"
         },
         "kafka": {
-          "topic": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished",
+          "topic": "plataformatransaccionaldistribuidaeventdriven.theoutboxrelayeventuallypublishestheeventtothemessagebroker",
           "partitions": 3,
           "replicas": 2,
           "bindingVersion": "0.3.0"
         }
       },
       "publish": {
-        "summary": "Publish theCustomerUpdatedeventispublished event",
+        "summary": "Publish theoutboxrelayeventuallypublishestheeventtothemessagebroker event",
         "message": {
-          "name": "theCustomerUpdatedeventispublished",
+          "name": "theoutboxrelayeventuallypublishestheeventtothemessagebroker",
           "correlationId": {
             "description": "Correlation ID set in the header",
             "location": "$message.header#/correlationId"
@@ -644,19 +709,13 @@
               "eventType": {
                 "type": "string",
                 "enum": [
-                  "theCustomerUpdatedeventispublished"
+                  "theoutboxrelayeventuallypublishestheeventtothemessagebroker"
                 ]
               },
               "payload": {
                 "type": "object",
                 "properties": {
-                  "from": {
-                    "type": "string"
-                  },
                   "a": {
-                    "type": "string"
-                  },
-                  "to": {
                     "type": "string"
                   },
                   "messageid": {
@@ -667,9 +726,7 @@
                   }
                 },
                 "required": [
-                  "from",
                   "a",
-                  "to",
                   "messageid",
                   "the"
                 ]

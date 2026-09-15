@@ -1,4 +1,4 @@
-namespace transactionalsystem.Application.Commands;
+namespace mygherkinservice.Application.Commands;
 
 using System;
 using MediatR;

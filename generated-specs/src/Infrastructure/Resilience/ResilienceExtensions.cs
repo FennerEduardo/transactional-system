@@ -11,7 +11,7 @@ using Polly.CircuitBreaker;
 using Polly.Retry;
 using Polly.Timeout;
 
-namespace transactionalsystem.Infrastructure.Resilience
+namespace mygherkinservice.Infrastructure.Resilience
 {
     public static class ResiliencePipelineExtensions
     {
