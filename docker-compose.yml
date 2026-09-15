@@ -10,7 +10,7 @@ services:
     working_dir: /app
     environment:
       - ENVIRONMENT=development
-      - DATABASE_URL=postgresql://dev_user:dev_password@postgresql:5432/transactional-system_db
+      - DATABASE_URL=${DATABASE_URL:-postgresql://dev_user:dev_password@postgresql:5432/transactional-system_db}
     ports:
       - "8000:8000"
     depends_on:
@@ -22,9 +22,9 @@ services:
     container_name: transactional-system-db
     restart: always
     environment:
-      POSTGRES_DB: transactional-system_db
-      POSTGRES_USER: dev_user
-      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: ${POSTGRES_DB:-transactional-system_db}
+      POSTGRES_USER: ${POSTGRES_USER:-dev_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev_password}
     ports:
       - "5432:5432"
     volumes:
@@ -32,13 +32,13 @@ services:
 
   
   # Message Broker
-  sqs:
-    image: localstack/localstack
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
     container_name: transactional-system-mq
     restart: always
     ports:
-      - "4566:4566"
-      
+      - "5672:5672"
+      - "15672:15672"
   
 
   # Redis Cache

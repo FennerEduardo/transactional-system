@@ -1,24 +1,17 @@
 {
+  "version": "1.0",
   "projectName": "transactional-system",
-  "architecture": "cqrs",
-  "domainProfile": "financial",
+  "outputDir": "./",
   "stack": {
     "language": "csharp",
     "framework": "dotnet-aspnetcore",
-    "orm": "entity-framework-core",
     "database": "postgresql",
-    "validation": "fluentvalidation",
+    "orm": "entity-framework-core",
+    "testing": "reqnroll-xunit",
+    "architecture": "cqrs",
+    "messaging": "rabbitmq",
+    "cache": "redis",
     "auth": "jwt",
-    "messaging": "sqs",
-    "testing": "xunit"
-  },
-  "rules": {
-    "bcryptCostFactor": 12,
-    "jwtTtlSeconds": 3600,
-    "strictLayerBoundaries": true,
-    "enforceDependencyInversion": true,
-    "requireApiVersioning": true,
-    "allowGlobalState": false
-  },
-  "outputDir": "./"
+    "cloud": "aws"
+  }
 }

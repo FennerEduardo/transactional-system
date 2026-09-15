@@ -4,18 +4,17 @@ Objective: Implement domain entities and ports in C# 10+.
 > [!IMPORTANT]
 > User prefers Spanish. Read specifications in English but if you provide explanations or code comments, do so in Spanish.
 
-📌 Feature Specification: Plataforma Transaccional Distribuida Event-Driven
-> Como operador del sistema
-> Quiero una plataforma transaccional distribuida y resiliente
-> Para poder procesar pedidos y pagos con garantías de idempotencia, compensación y trazabilidad
+📌 Feature Specification: Transactional System
+> As a system user or business manager
+> I want to process and manage transactional system operations
+> So that data integrity and business rules are enforced across the application
 
 🏗️ Strict Architectural Patterns:
-- Command Handler
-- Query Handler
-- Event Store
-- Read Model Projection
-- Write Aggregate
-- Event Publisher
+- Inbound Port
+- Outbound Port
+- Inbound Adapter (HTTP/CLI)
+- Outbound Adapter (DB/Queue)
+- Domain Core
 
 🛠️ Technical Rails:
 - Language: C#
@@ -23,25 +22,19 @@ Objective: Implement domain entities and ports in C# 10+.
 
 📂 Folder Structure Target:
 src/
-  ├── commands/
-  │   ├── handlers/
-  │   └── models/
-  ├── queries/
-  │   ├── handlers/
-  │   └── projections/
-  └── events/
-      ├── store/
-      └── schemas/
+  ├── core/
+  │   ├── domain/
+  │   └── ports/
+  │       ├── inbound/
+  │       └── outbound/
+  ├── adapters/
+  │   ├── inbound/ (http controllers)
+  │   └── outbound/ (repositories)
+  └── config/
 
 🎯 Scenarios to Fulfill:
-1. "AC-01 Duplicate Order (Idempotency in Orders)"
-2. "AC-02 Duplicate Payment (Idempotency in Payments)"
-3. "AC-03 Payment Failure (Saga Compensation)"
-4. "AC-04 Worker Crash (Redelivery and Resilience)"
-5. "AC-05 External Timeout (Circuit Breaker and DLQ)"
-6. "AC-06 Full Traceability (Correlation ID)"
-7. "AC-07 Recovery (Saga State Persistence)"
-8. "AC-08 Horizontal Scaling (No Duplicate Processing)"
+1. "Process transactional system successfully"
+2. "Reject transactional system with invalid parameters"
 
 Must Output:
 1. Pure C# classes/records for Entities/Aggregates
@@ -53,7 +46,7 @@ Must Output:
 
 ## [MANDATORY] AI Agent Execution Instructions (The "What" and "How")
 1. **WHAT TO DO**: Read the Gherkin feature file and the domain models provided. You MUST implement exactly what is specified in the feature file. Do NOT invent new features, do NOT add speculative functionality, and do NOT leave placeholder comments (e.g. "pending implementation").
-2. **HOW TO DO IT**: Follow the specified architecture strictly (`cqrs`). Respect layer boundaries:
+2. **HOW TO DO IT**: Follow the specified architecture strictly (`hexagonal`). Respect layer boundaries:
    - Domain Layer must have NO dependencies on infrastructure or external libraries.
    - Application Layer (Use Cases) orchestrates domain entities but does not contain business logic.
    - Infrastructure Layer implements persistence, external APIs, and framework-specific code.
