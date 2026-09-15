@@ -20,11 +20,11 @@ public interface IRepository<TEntity, TId>
     Task AddAsync(TEntity entity);
 }
 
-public class TransactionalSystem : AggregateRoot<Guid>
+public class PlataformaTransaccionalDistribuidaEventDriven : AggregateRoot<Guid>
 {
     public string ReferenceCode { get; private set; } = string.Empty;
 
-    public TransactionalSystem(string referenceCode)
+    public PlataformaTransaccionalDistribuidaEventDriven(string referenceCode)
     {
         Id = Guid.NewGuid();
         ReferenceCode = referenceCode;

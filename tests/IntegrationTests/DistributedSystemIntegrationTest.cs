@@ -51,7 +51,7 @@ namespace transactionalsystem.IntegrationTests
             var command = new { Amount = 250.00m, CustomerId = "cust_123", ReferenceCode = "REF-2026-X" };
 
             // Act
-            var response = await _client.PostAsJsonAsync("/api/v1/transactionalsystem", command);
+            var response = await _client.PostAsJsonAsync("/api/v1/plataformatransaccionaldistribuidaeventdriven", command);
 
             // Assert
             Assert.True(response.IsSuccessStatusCode);
@@ -64,13 +64,13 @@ namespace transactionalsystem.IntegrationTests
             var idempotencyKey = Guid.NewGuid().ToString();
             var command = new { Amount = 100.00m, CustomerId = "cust_555" };
             
-            var request1 = new HttpRequestMessage(HttpMethod.Post, "/api/v1/transactionalsystem")
+            var request1 = new HttpRequestMessage(HttpMethod.Post, "/api/v1/plataformatransaccionaldistribuidaeventdriven")
             {
                 Content = JsonContent.Create(command)
             };
             request1.Headers.Add("X-Idempotency-Key", idempotencyKey);
 
-            var request2 = new HttpRequestMessage(HttpMethod.Post, "/api/v1/transactionalsystem")
+            var request2 = new HttpRequestMessage(HttpMethod.Post, "/api/v1/plataformatransaccionaldistribuidaeventdriven")
             {
                 Content = JsonContent.Create(command)
             };
@@ -92,7 +92,7 @@ namespace transactionalsystem.IntegrationTests
             var invalidCommand = new { Amount = -50.00m, CustomerId = "cust_invalid" };
 
             // Act
-            var response = await _client.PostAsJsonAsync("/api/v1/transactionalsystem", invalidCommand);
+            var response = await _client.PostAsJsonAsync("/api/v1/plataformatransaccionaldistribuidaeventdriven", invalidCommand);
 
             // Assert
             Assert.True(response.StatusCode == HttpStatusCode.BadRequest || response.StatusCode == HttpStatusCode.UnprocessableEntity);

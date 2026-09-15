@@ -1,4 +1,4 @@
-# ADR 001: Architecture Decisions for Transactional System
+# ADR 001: Architecture Decisions for Plataforma Transaccional Distribuida Event-Driven
 
 ## Status
 Accepted

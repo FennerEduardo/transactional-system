@@ -6,17 +6,19 @@
     "language": "csharp",
     "framework": "dotnet-aspnetcore",
     "orm": "entity-framework-core",
+    "database": "postgresql",
     "validation": "fluentvalidation",
     "auth": "jwt",
-    "testing": "xunit",
-    "database": "postgresql",
-    "messaging": "sqs"
+    "messaging": "sqs",
+    "testing": "xunit"
   },
   "rules": {
     "bcryptCostFactor": 12,
     "jwtTtlSeconds": 3600,
     "strictLayerBoundaries": true,
-    "coverageTarget": 85
+    "enforceDependencyInversion": true,
+    "requireApiVersioning": true,
+    "allowGlobalState": false
   },
-  "outputDir": "./generated-specs"
+  "outputDir": "./"
 }

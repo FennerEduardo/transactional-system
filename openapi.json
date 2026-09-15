@@ -1,15 +1,15 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Transactional System API Specification",
+    "title": "Plataforma Transaccional Distribuida Event-Driven API Specification",
     "version": "1.0.0",
-    "description": "Auto-generated OpenAPI specification for Transactional System from Gherkin feature spec."
+    "description": "Auto-generated OpenAPI specification for Plataforma Transaccional Distribuida Event-Driven from Gherkin feature spec."
   },
   "paths": {
-    "/api/v1/transactional-system": {
+    "/api/v1/plataforma-transaccional-distribuida-event-driven": {
       "post": {
-        "summary": "POST /api/v1/transactional-system",
-        "operationId": "processTransactionalSystem",
+        "summary": "POST /api/v1/plataforma-transaccional-distribuida-event-driven",
+        "operationId": "processPlataformaTransaccionalDistribuidaEventDriven",
         "security": [],
         "requestBody": {
           "required": true,
@@ -44,9 +44,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          },
-          "400": {
-            "description": "Client Error"
           }
         }
       }
