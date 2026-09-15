@@ -1,0 +1,21 @@
+{
+  "projectName": "transactional-system",
+  "architecture": "cqrs",
+  "stack": {
+    "language": "csharp",
+    "framework": "dotnet10",
+    "orm": "ef-core",
+    "database": "postgresql",
+    "validation": "fluent-validation",
+    "auth": "jwt",
+    "messaging": "sqs-sns",
+    "testing": "xunit"
+  },
+  "rules": {
+    "bcryptCostFactor": 12,
+    "jwtTtlSeconds": 3600,
+    "strictLayerBoundaries": true,
+    "coverageTarget": 85
+  },
+  "outputDir": "./generated-specs"
+}

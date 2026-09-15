@@ -1,0 +1,689 @@
+{
+  "asyncapi": "2.6.0",
+  "info": {
+    "title": "Plataforma Transaccional Distribuida Event-Driven AsyncAPI Specification",
+    "version": "1.0.0",
+    "description": "Auto-generated AsyncAPI events for Plataforma Transaccional Distribuida Event-Driven from Gherkin feature spec."
+  },
+  "defaultContentType": "application/json",
+  "channels": {
+    "plataformatransaccionaldistribuidaeventdriven/events/aordercreatedeventispublishedwithauniquecorrelationid": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.aordercreatedeventispublishedwithauniquecorrelationid.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.aordercreatedeventispublishedwithauniquecorrelationid",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish aOrderCreatedeventispublishedwithauniqueCorrelationId event",
+        "message": {
+          "name": "aOrderCreatedeventispublishedwithauniqueCorrelationId",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "aOrderCreatedeventispublishedwithauniqueCorrelationId"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/anexistingwebhookeventwithmessageidabc123": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.anexistingwebhookeventwithmessageidabc123.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.anexistingwebhookeventwithmessageidabc123",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish anexistingwebhookeventwithMessageIdABC123 event",
+        "message": {
+          "name": "anexistingwebhookeventwithMessageIdABC123",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "anexistingwebhookeventwithMessageIdABC123"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/thesystemreceivesaduplicatewebhookeventwithmessageidabc123": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.thesystemreceivesaduplicatewebhookeventwithmessageidabc123.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.thesystemreceivesaduplicatewebhookeventwithmessageidabc123",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish thesystemreceivesaduplicatewebhookeventwithMessageIdABC123 event",
+        "message": {
+          "name": "thesystemreceivesaduplicatewebhookeventwithMessageIdABC123",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "thesystemreceivesaduplicatewebhookeventwithMessageIdABC123"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/thesystemignorestheduplicateevent": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.thesystemignorestheduplicateevent.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.thesystemignorestheduplicateevent",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish thesystemignorestheduplicateevent event",
+        "message": {
+          "name": "thesystemignorestheduplicateevent",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "thesystemignorestheduplicateevent"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/anoutboxeventissafelypersisted": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.anoutboxeventissafelypersisted.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.anoutboxeventissafelypersisted",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish anOutboxeventissafelypersisted event",
+        "message": {
+          "name": "anOutboxeventissafelypersisted",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "anOutboxeventissafelypersisted"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    },
+    "plataformatransaccionaldistribuidaeventdriven/events/thecustomerupdatedeventispublished": {
+      "bindings": {
+        "rabbitmq": {
+          "is": "routingKey",
+          "queue": {
+            "name": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished.queue",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false
+          },
+          "bindingVersion": "0.2.0"
+        },
+        "kafka": {
+          "topic": "plataformatransaccionaldistribuidaeventdriven.thecustomerupdatedeventispublished",
+          "partitions": 3,
+          "replicas": 2,
+          "bindingVersion": "0.3.0"
+        }
+      },
+      "publish": {
+        "summary": "Publish theCustomerUpdatedeventispublished event",
+        "message": {
+          "name": "theCustomerUpdatedeventispublished",
+          "correlationId": {
+            "description": "Correlation ID set in the header",
+            "location": "$message.header#/correlationId"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "correlationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Correlation ID for distributed tracing"
+              },
+              "causationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID of the event/command that caused this event"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "default": "1.0"
+              },
+              "retryCount": {
+                "type": "integer",
+                "default": 0
+              },
+              "dlqReason": {
+                "type": "string",
+                "description": "Reason for moving to DLQ (if applicable)"
+              }
+            },
+            "required": [
+              "correlationId",
+              "schemaVersion"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "occurredOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "theCustomerUpdatedeventispublished"
+                ]
+              },
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "a": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "messageid": {
+                    "type": "string"
+                  },
+                  "the": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "a",
+                  "to",
+                  "messageid",
+                  "the"
+                ]
+              }
+            },
+            "required": [
+              "eventId",
+              "occurredOn",
+              "eventType",
+              "payload"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

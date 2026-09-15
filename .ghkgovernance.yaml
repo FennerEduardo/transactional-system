@@ -1,0 +1,29 @@
+version: "1.0"
+projectName: transactional-system
+allowedPaths:
+  - specs/**
+  - tests/**
+  - generated-specs/**
+  - src/**
+  - app/**
+  - public/**
+  - views/**
+  - controllers/**
+  - domain/**
+protectedPaths:
+  - .env*
+  - docker-compose.yml
+  - "**/secrets.*"
+  - node_modules/**
+  - vendor/**
+  - .git/**
+maxFilesPerTask: 12
+prohibitedImports:
+  php:
+    - laravel/framework
+    - symfony/symfony
+    - illuminate/*
+requireHumanApprovalOn:
+  - docker-compose.yml
+  - schema.sql
+  - migrations/**
