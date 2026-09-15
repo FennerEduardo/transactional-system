@@ -1,5 +1,5 @@
 version: "1.0"
-projectName: my-gherkin-service
+projectName: transactional-system
 allowedPaths:
   - specs/**
   - tests/**
@@ -22,10 +22,9 @@ protectedPaths:
   - kubernetes/**
 maxFilesPerTask: 12
 prohibitedImports:
-  php:
-    - laravel/framework
-    - symfony/symfony
-    - illuminate/*
+  csharp:
+    - System.Data.SqlClient unparameterized queries
+    - Direct HttpContext coupling in domain layer
 requireHumanApprovalOn:
   - docker-compose.yml
   - package.json
@@ -49,5 +48,6 @@ requireHumanApprovalOn:
   - "*.tf"
   - kubernetes/**
   - helm/**
-  - schema.sql
+  - appsettings.json
+  - Program.cs
   - migrations/**

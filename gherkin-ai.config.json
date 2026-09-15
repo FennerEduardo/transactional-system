@@ -6,11 +6,11 @@
     "language": "csharp",
     "framework": "dotnet-aspnetcore",
     "orm": "entity-framework-core",
-    "database": "postgresql",
     "validation": "fluentvalidation",
     "auth": "jwt",
-    "messaging": "sqs",
-    "testing": "xunit"
+    "testing": "xunit",
+    "database": "postgresql",
+    "messaging": "sqs"
   },
   "rules": {
     "bcryptCostFactor": 12,
