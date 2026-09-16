@@ -1,0 +1,177 @@
+? Multiple projects detected. Which one do you want to run Gherkin AI on? (Use 
+arrow keys)
+❯ [Current Directory] transactional-system 
+  infrastructure [17D[17C[2K[1A[2K[1A[2K[1A[2K[G? Multiple projects detected. Which one do you want to run Gherkin AI on? 
+[Current Directory] transactional-system[1A[40D[114C
+[1B{
+  "version": "1.0",
+  "generatedAt": "2026-09-15T17:45:03.313Z",
+  "createdBy": "gherkin-ai-cli",
+  "artifacts": [
+    {
+      "filePath": "ADR-001-architecture-decisions.md",
+      "type": "other",
+      "checksum": "003d4a15872836f8759daba87f88c8f12a52566bc1097b3b4c9d3c3845250acb"
+    },
+    {
+      "filePath": "openapi.json",
+      "type": "openapi",
+      "checksum": "a8706d24f642c2d03948d0806904d150e5acb09d0e2a5f11d10807aa05602c40"
+    },
+    {
+      "filePath": "asyncapi.json",
+      "type": "contract",
+      "checksum": "5717dfff015b7d1283d595bfc37febd4714ac21ac2c335c74889b4ce8ddc12dc"
+    },
+    {
+      "filePath": "transactionalsystem.contract.cs",
+      "type": "contract",
+      "checksum": "3f35255344e7cc7f25a7faf1d129a6ab3257d5703f4b3c772ab52eabd73d7a43"
+    },
+    {
+      "filePath": "transactional-system.csproj",
+      "type": "config",
+      "checksum": "8e2b59c0e73d6fba3e4ceecfbf66b7f829778a05f81fb04dc801fbe4c2ca25a7"
+    },
+    {
+      "filePath": "validate.sh",
+      "type": "config",
+      "checksum": "22b9f1dc0f819c993c99a20a34a3753aa4dc2ee62e9d62270c224145409e924d"
+    },
+    {
+      "filePath": "fixtures.ts",
+      "type": "fixture",
+      "checksum": "8b2398eac43f757f84955b001db54c0cecdbb9b171ea6f95f9052b199a15b05a"
+    },
+    {
+      "filePath": "seed.sql",
+      "type": "fixture",
+      "checksum": "6d147448df0dfb1a07cb0cbe5464cf7d798616570479821824b3fb86461f79f6"
+    },
+    {
+      "filePath": "src/Domain/TransactionalSystem.cs",
+      "type": "test",
+      "checksum": "1a767120ee70937675855560d507c1038daa3d9bdfa1d5ad703bd861c217dcfc"
+    },
+    {
+      "filePath": "src/Infrastructure/Repositories/TransactionalSystemRepository.cs",
+      "type": "test",
+      "checksum": "24d596fd15f9fe5c12375e8e3dc480d95d878a3e7a36eddd44f79f8cd7d545ba"
+    },
+    {
+      "filePath": "src/Api/Controllers/TransactionalSystemController.cs",
+      "type": "test",
+      "checksum": "5f5e6c40eb703b95a04d35622e345ed33bbccf2499f5a98bc57fbac609ae29a6"
+    },
+    {
+      "filePath": "src/Infrastructure/Data/ApplicationDbContext.cs",
+      "type": "test",
+      "checksum": "366c0c8b47cd2ffb92ac0c8167b49760bed4e409dc06370d8f2af7893867af98"
+    },
+    {
+      "filePath": "src/Api/Program.cs",
+      "type": "test",
+      "checksum": "9b0884a6dee2e8be29b29ffd5d52e18d5884a8b81757ff9ca960d729353e311f"
+    },
+    {
+      "filePath": "tests/Steps/TransactionalSystemStepDefinitions.cs",
+      "type": "test",
+      "checksum": "b2b0f7761adc9a74a3bcce5676bad925958f630ce6b5a30479fd02d41872881e"
+    },
+    {
+      "filePath": "src/Application/CQRS/TransactionalSystemHandlers.cs",
+      "type": "test",
+      "checksum": "5349eed6a02c6d1040777657d6b37540694e437a37fa5f760cb1860d5ab495ce"
+    },
+    {
+      "filePath": "src/Application/Sagas/PaymentSagaStateMachine.cs",
+      "type": "test",
+      "checksum": "30064bec25079b6ab4816d27b8ae6359317d2155b7a3a3b357c4717fa4984a1c"
+    },
+    {
+      "filePath": "src/Application/Behaviors/IdempotencyInfrastructure.cs",
+      "type": "test",
+      "checksum": "318b49f0e8e9b7a6e3ff4170177d932bd8cde402698c2ff276c0a7c8626faf90"
+    },
+    {
+      "filePath": "src/Infrastructure/Outbox/OutboxInfrastructure.cs",
+      "type": "test",
+      "checksum": "0c3ab85f5379071936ba4580ba5b319f3f4a784df47e872261c0ebddc8307982"
+    },
+    {
+      "filePath": "src/Infrastructure/Inbox/InboxInfrastructure.cs",
+      "type": "test",
+      "checksum": "f860b92f7ff2f4921a73c95943628fc6c0031363f1d7a316b285a53d3b4dad94"
+    },
+    {
+      "filePath": "src/Infrastructure/Resilience/ResilienceExtensions.cs",
+      "type": "test",
+      "checksum": "e86c072a7e682a759e3e9d132acc7a6ec1292886ea5ec2307fa6afa55af2b189"
+    },
+    {
+      "filePath": "src/Infrastructure/Telemetry/OpenTelemetryExtensions.cs",
+      "type": "test",
+      "checksum": "e42cf0d82c3c4be9cd796c3604dcb8dc704a757302eb0b742acc02141c4baa3a"
+    },
+    {
+      "filePath": "src/Infrastructure/Realtime/SignalRNotificationService.cs",
+      "type": "test",
+      "checksum": "0354ca81890f1bfbc17496914229f99ab67b1603df9d6d86ebe0e31e154c7b24"
+    },
+    {
+      "filePath": "src/Api/AppHost/Program.cs",
+      "type": "test",
+      "checksum": "de18050a26a21c03e5d9b40beec65cb09d0f408b8a30733d81ef9bc6c28d5e58"
+    },
+    {
+      "filePath": "src/Api/ServiceDefaults/Extensions.cs",
+      "type": "test",
+      "checksum": "f5c488c2ba940fc77f9d03bbb25190d83090f66033cf1cb9b2cc60423bddc46f"
+    },
+    {
+      "filePath": "tests/IntegrationTests/DistributedSystemIntegrationTest.cs",
+      "type": "test",
+      "checksum": "fbe22a4e172600c52bd5c7bcb8db0273c3271c4b9bafe25786de03dc9024c56a"
+    },
+    {
+      "filePath": "docker-compose.yml",
+      "type": "config",
+      "checksum": "031cd92b4ddb8b23d66f935cb4d15f455010bc16e0750523ac1e8bb6c29e5b45"
+    },
+    {
+      "filePath": ".env.example",
+      "type": "config",
+      "checksum": "a2d3fbbfadc451e9964ca173c677767fc01be1566e9cc59d5b1801d766c8230c"
+    },
+    {
+      "filePath": "infrastructure/lib/transactional-system-stack.ts",
+      "type": "config",
+      "checksum": "edc702bacf6281d28386c936644959e03bc6604ef419fcf3971db69cfb99d2e4"
+    },
+    {
+      "filePath": "infrastructure/cdk.json",
+      "type": "config",
+      "checksum": "8738f18d939493cf9eea9330db8687124735099e774d396721bd24cf3bb62146"
+    },
+    {
+      "filePath": "infrastructure/package.json",
+      "type": "config",
+      "checksum": "ac6ba93357e713ce5b6cf9cba606b31a34c88b8dd9c67fe4071a972424ff2867"
+    },
+    {
+      "filePath": "prompts/domain-agent.md",
+      "type": "prompt",
+      "checksum": "394ec66643f50271cb7b15f1fa3b9baaa173bccb40622f4f748cc757e92c31f1"
+    },
+    {
+      "filePath": "prompts/backend-agent.md",
+      "type": "prompt",
+      "checksum": "361a5b6b328f999af932a5cccfd3983f7579fa56492000029354216437f3b75f"
+    },
+    {
+      "filePath": "prompts/qa-agent.md",
+      "type": "prompt",
+      "checksum": "984db8a50175640f4d0bd0f3cab61a5871269b9c2798b13d35d4db0df71218f7"
+    }
+  ]
+}
