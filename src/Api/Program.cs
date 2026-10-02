@@ -12,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configure Tenant Service
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantService, HttpHeaderTenantService>();
+
 // Configure DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Host=localhost;Database=mydb;Username=postgres;Password=postgres"));
@@ -47,3 +51,28 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { } // For integration testing
+
+namespace transactionalsystem.Infrastructure.Data
+{
+    using Microsoft.AspNetCore.Http;
+    
+    public class HttpHeaderTenantService : ITenantService
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public HttpHeaderTenantService(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public string GetCurrentTenantId()
+        {
+            var context = _httpContextAccessor.HttpContext;
+            if (context != null && context.Request.Headers.TryGetValue("X-Tenant-Id", out var tenantId))
+            {
+                return tenantId.ToString();
+            }
+            return "default"; // Fallback
+        }
+    }
+}

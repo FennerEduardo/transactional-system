@@ -8,6 +8,7 @@ public abstract class AggregateRoot<TId>
 {
     public TId Id { get; protected set; } = default!;
     public long Version { get; protected set; }
+    public string TenantId { get; protected set; } = string.Empty;
 }
 
 public abstract class ValueObject
@@ -24,9 +25,10 @@ public class TransactionalSystem : AggregateRoot<Guid>
 {
     public string ReferenceCode { get; private set; } = string.Empty;
 
-    public TransactionalSystem(string referenceCode)
+    public TransactionalSystem(string referenceCode, string tenantId = "default")
     {
         Id = Guid.NewGuid();
         ReferenceCode = referenceCode;
+        TenantId = tenantId;
     }
 }

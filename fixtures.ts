@@ -17,5 +17,6 @@ export function createTransactionalSystemFixture(): TransactionalSystemFixture {
 }
 
 export const GHERKIN_GIVEN_PRECONDITIONS = [
-
+  "a valid transactional system request with required payload",
+  "an invalid transactional system request with missing fields"
 ];

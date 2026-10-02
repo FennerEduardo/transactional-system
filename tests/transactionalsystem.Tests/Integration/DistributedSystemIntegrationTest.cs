@@ -14,6 +14,8 @@ using Xunit;
 
 namespace transactionalsystem.IntegrationTests
 {
+    // Needs Docker (Testcontainers). Run with: dotnet test --filter Category=Integration
+    [Trait("Category", "Integration")]
     public class DistributedSystemIntegrationTest : IAsyncLifetime
     {
         private readonly PostgreSqlContainer _postgresContainer = new PostgreSqlBuilder()

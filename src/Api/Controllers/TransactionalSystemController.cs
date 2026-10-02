@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using transactionalsystem.Application.Commands;
+using transactionalsystem.Domain.TransactionalSystem; // commands, queries and read models live with the contract
 
 [ApiController]
 [Route("api/v1/[controller]")]

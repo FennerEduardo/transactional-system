@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using transactionalsystem.Infrastructure.Data;
+using transactionalsystem.Domain.TransactionalSystem;
 
 namespace transactionalsystem.Application.Handlers
 {

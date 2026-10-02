@@ -27,3 +27,14 @@ Objective: Implement automated tests using xUnit, Moq, and FluentAssertions.
    - Application Layer (Use Cases) orchestrates domain entities but does not contain business logic.
    - Infrastructure Layer implements persistence, external APIs, and framework-specific code.
 3. **OUTPUT FORMAT**: You MUST output your response strictly as valid JSON. Do not include markdown codeblocks (like ```json). The JSON must be an object with a "files" array: { "files": [{ "filePath": "...", "content": "..." }] }. Any deviation will cause a pipeline failure.
+
+## [MANDATORY] Step Definitions Dictionary
+You MUST reuse the following existing Step Definitions whenever possible instead of inventing new ones:
+
+- `Given a valid transactional system request with required payload` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `When processing transactional system request` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `Then the system responds with HTTP status 200 OK` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `Then stores record in database` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `Given an invalid transactional system request with missing fields` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `Then the system responds with HTTP status 400 Bad Request` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
+- `Then returns validation error details` (found in /home/fenner/apps/fenner/ghk-test-projects/transactional-system/tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs)
