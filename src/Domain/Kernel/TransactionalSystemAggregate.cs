@@ -33,6 +33,10 @@ public sealed class TransactionalSystemAggregate
         Id = id;
     }
 
+    /// <summary>Rebuilds an aggregate from persisted state; no events are recorded.</summary>
+    public static TransactionalSystemAggregate Restore(string id, string state, long version) =>
+        new(id) { State = state, Version = version };
+
     public string Id { get; }
     public string State { get; private set; } = TransactionalSystemStates.PENDING;
     public long Version { get; private set; }
