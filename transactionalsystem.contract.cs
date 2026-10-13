@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
 
 // --------------------------------------------------------------------------
 // 1. Core DDD Interfaces & Base Classes
@@ -77,14 +76,14 @@ public record CreateTransactionalSystemCommand(
     DateTime Timestamp,
     string ReferenceCode,
     decimal Amount
-) : IRequest<CommandResult>;
+);
 
 public record TransactionalSystemReadModel(Guid Id, string ReferenceCode, decimal Amount, string Status, DateTime UpdatedAt);
 
 public record GetTransactionalSystemQuery(
     Guid TransactionalSystemId,
     Guid TenantId
-) : IRequest<TransactionalSystemReadModel?>;
+);
 
 // --------------------------------------------------------------------------
 // 4. Strongly-Typed Domain Repository Port

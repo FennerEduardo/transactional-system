@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Transactional System API Specification",
+    "title": "transactional-system API",
     "version": "1.0.0",
-    "description": "Auto-generated OpenAPI specification for Transactional System from Gherkin feature spec."
+    "description": "Service API of transactional-system, merged from 1 feature contract(s) in contracts/."
   },
   "paths": {
     "/api/v1/transactional-system": {

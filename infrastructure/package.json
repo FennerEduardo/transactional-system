@@ -1,16 +1,23 @@
 {
-  "name": "transactional-system-infra",
+  "name": "transactional-system-infrastructure",
   "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
+    "synth": "cdk synth --quiet",
+    "diff": "cdk diff",
+    "deploy": "cdk deploy"
+  },
   "dependencies": {
-    "aws-cdk-lib": "2.100.0",
-    "constructs": "10.0.0"
+    "aws-cdk-lib": "^2.272.0",
+    "constructs": "^10.8.1",
+    "@aws-cdk/lambda-layer-kubectl-v35": "^2.2.2"
   },
   "devDependencies": {
-    "aws-cdk": "2.100.0",
-    "ts-node": "^10.9.1",
-    "typescript": "~5.2.2"
-  },
-  "scripts": {
-    "synth": "cdk synth"
+    "aws-cdk": "^2.1144.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "~6.0.0"
   }
 }

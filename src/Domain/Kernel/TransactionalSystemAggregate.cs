@@ -2,11 +2,6 @@
 // Pure domain logic: no framework, no I/O. Extend the command handlers with your business rules.
 namespace transactionalsystem.Domain.Kernel;
 
-public sealed class DomainValidationException : Exception
-{
-    public DomainValidationException(string message) : base(message) { }
-}
-
 public static class TransactionalSystemStates
 {
     public const string PENDING = "PENDING";

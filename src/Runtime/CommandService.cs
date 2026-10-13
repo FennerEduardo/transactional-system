@@ -11,14 +11,33 @@ namespace transactionalsystem.Runtime;
 /// </summary>
 public sealed class CommandService
 {
-    private const string AggregateType = "TransactionalSystem";
+    /// <summary>Aggregate type used when a request does not name one.</summary>
+    public const string DefaultAggregate = "TransactionalSystem";
 
-    private static readonly Dictionary<string, Func<TransactionalSystemAggregate, TransactionalSystemCommand, TransactionalSystemDomainEvent>> Commands = new()
+    /// <summary>The new state of an aggregate after a command, and the recorded event.</summary>
+    private sealed record Applied(string State, long Version, string EventType, long EventVersion, object Event);
+
+    /// <summary>Every aggregate of this service: (id, state?, version, command, payload) -> applied command.</summary>
+    private static readonly Dictionary<string, Func<string, string?, long, string, IReadOnlyDictionary<string, object?>?, Applied>> Aggregates = new()
     {
-        ["process_transactional_system"] = (a, c) => a.ProcessTransactionalSystem(c),
+        ["TransactionalSystem"] = (id, state, version, command, payload) =>
+        {
+            var aggregate = state is null ? new TransactionalSystemAggregate(id) : TransactionalSystemAggregate.Restore(id, state, version);
+            var cmd = new TransactionalSystemCommand(id, payload);
+            TransactionalSystemDomainEvent @event = command switch
+            {
+                "process_transactional_system" => aggregate.ProcessTransactionalSystem(cmd),
+                _ => throw new DomainValidationException($"Unknown command {command}")
+            };
+            return new Applied(aggregate.State, aggregate.Version, @event.Type, @event.Version, @event);
+        },
     };
 
-    public sealed record Request(string TenantId, string AggregateId, string Command, IReadOnlyDictionary<string, object?>? Payload = null, string? IdempotencyKey = null, string? Traceparent = null);
+    /// <summary>AggregateType: the feature's aggregate (e.g. TransactionalSystem); null means DefaultAggregate.</summary>
+    public sealed record Request(string TenantId, string AggregateId, string Command, IReadOnlyDictionary<string, object?>? Payload = null, string? IdempotencyKey = null, string? Traceparent = null, string? AggregateType = null)
+    {
+        public string Type => string.IsNullOrWhiteSpace(AggregateType) ? DefaultAggregate : AggregateType;
+    }
 
     public sealed record Result(string Status, string AggregateId, string? EventType = null, long? Version = null);
 
@@ -36,7 +55,7 @@ public sealed class CommandService
     public async Task<Result> HandleAsync(Request req, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(req.TenantId)) throw new DomainValidationException("TenantId is required");
-        using var activity = Telemetry.Source.StartActivity($"{AggregateType}.{req.Command}", ActivityKind.Internal, Telemetry.ParentFrom(req.Traceparent));
+        using var activity = Telemetry.Source.StartActivity($"{req.Type}.{req.Command}", ActivityKind.Internal, Telemetry.ParentFrom(req.Traceparent));
         activity?.SetTag("tenant.id", req.TenantId);
         activity?.SetTag("aggregate.id", req.AggregateId);
         await using var conn = await _db.OpenConnectionAsync(ct);
@@ -73,24 +92,27 @@ public sealed class CommandService
             }
         }
 
-        TransactionalSystemAggregate aggregate;
+        if (!Aggregates.TryGetValue(req.Type, out var apply)) throw new DomainValidationException($"Unknown aggregate type {req.Type}");
+        string? state = null;
+        long version = 0;
         await using (var load = new NpgsqlCommand($"SELECT state, version FROM {_s}.ghk_aggregates WHERE tenant_id = $1 AND aggregate_type = $2 AND id = $3 FOR UPDATE", conn)
-        { Parameters = { new() { Value = req.TenantId }, new() { Value = AggregateType }, new() { Value = req.AggregateId } } })
+        { Parameters = { new() { Value = req.TenantId }, new() { Value = req.Type }, new() { Value = req.AggregateId } } })
         await using (var reader = await load.ExecuteReaderAsync(ct))
         {
-            aggregate = await reader.ReadAsync(ct)
-                ? TransactionalSystemAggregate.Restore(req.AggregateId, reader.GetString(0), reader.GetInt32(1))
-                : new TransactionalSystemAggregate(req.AggregateId);
+            if (await reader.ReadAsync(ct))
+            {
+                state = reader.GetString(0);
+                version = reader.GetInt32(1);
+            }
         }
-        if (!Commands.TryGetValue(req.Command, out var handler)) throw new DomainValidationException($"Unknown command {req.Command}");
-        var @event = handler(aggregate, new TransactionalSystemCommand(req.AggregateId, req.Payload));
+        var applied = apply(req.AggregateId, state, version, req.Command, req.Payload);
 
         await Exec(conn, $"INSERT INTO {_s}.ghk_aggregates (tenant_id, aggregate_type, id, state, version) VALUES ($1, $2, $3, $4, $5) " +
             "ON CONFLICT (tenant_id, aggregate_type, id) DO UPDATE SET state = EXCLUDED.state, version = EXCLUDED.version, updated_at = now()",
-            ct, req.TenantId, AggregateType, req.AggregateId, aggregate.State, (int)aggregate.Version);
+            ct, req.TenantId, req.Type, req.AggregateId, applied.State, (int)applied.Version);
         await Exec(conn, $"INSERT INTO {_s}.ghk_outbox (id, tenant_id, aggregate_id, event_type, payload, traceparent) VALUES ($1, $2, $3, $4, $5, $6)",
-            ct, Guid.NewGuid().ToString(), req.TenantId, req.AggregateId, @event.Type, JsonSerializer.Serialize(@event), (object?)traceparent ?? DBNull.Value);
-        var result = new Result("created", req.AggregateId, @event.Type, @event.Version);
+            ct, Guid.NewGuid().ToString(), req.TenantId, req.AggregateId, applied.EventType, JsonSerializer.Serialize(applied.Event, applied.Event.GetType()), (object?)traceparent ?? DBNull.Value);
+        var result = new Result("created", req.AggregateId, applied.EventType, applied.EventVersion);
         if (req.IdempotencyKey is { } completedKey)
         {
             await Exec(conn, $"UPDATE {_s}.ghk_idempotency SET status = 'COMPLETED', response = $3 WHERE tenant_id = $1 AND key = $2", ct, req.TenantId, completedKey, JsonSerializer.Serialize(result));
@@ -99,11 +121,11 @@ public sealed class CommandService
     }
 
     /// <summary>The aggregate as the tenant sees it (null for other tenants' aggregates).</summary>
-    public async Task<Snapshot?> LoadAsync(string tenantId, string aggregateId)
+    public async Task<Snapshot?> LoadAsync(string tenantId, string aggregateId, string aggregateType = DefaultAggregate)
     {
         await using var cmd = _db.CreateCommand($"SELECT state, version FROM {_s}.ghk_aggregates WHERE tenant_id = $1 AND aggregate_type = $2 AND id = $3");
         cmd.Parameters.Add(new() { Value = tenantId });
-        cmd.Parameters.Add(new() { Value = AggregateType });
+        cmd.Parameters.Add(new() { Value = aggregateType });
         cmd.Parameters.Add(new() { Value = aggregateId });
         await using var reader = await cmd.ExecuteReaderAsync();
         return await reader.ReadAsync() ? new Snapshot(reader.GetString(0), reader.GetInt32(1)) : null;

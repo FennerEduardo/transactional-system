@@ -13,5 +13,6 @@
     "cache": "redis",
     "auth": "jwt",
     "cloud": "aws"
-  }
+  },
+  "infrastructure": { "awsCdk": true }
 }
