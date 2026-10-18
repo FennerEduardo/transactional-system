@@ -1,31 +1,28 @@
 using System.Diagnostics;
 using System.Text;
 using Npgsql;
-using RabbitMQ.Client;
 
 namespace transactionalsystem.Runtime;
 
 /// <summary>
 /// Publishes pending outbox rows. Rows are claimed with FOR UPDATE SKIP LOCKED and a lease, so
-/// concurrent relays never publish the same row; publisher confirms guarantee delivery to the broker
-/// before a row is marked published. Use one relay (and channel) per thread.
+/// concurrent relays never publish the same row; the publisher completes only once the broker has
+/// accepted the message (RabbitMQ confirms, Pub/Sub / Service Bus send), before a row is marked
+/// published. Use one relay (and publisher) per worker.
 /// </summary>
 public sealed class OutboxRelay
 {
     private readonly NpgsqlDataSource _db;
-    private readonly IModel _channel;
-    private readonly string _exchange;
+    private readonly IEventPublisher _publisher;
     private readonly string _s;
     public int LeaseSeconds { get; init; } = 30;
     public int MaxAttempts { get; init; } = 5;
 
-    public OutboxRelay(NpgsqlDataSource db, IModel channel, string exchange, string? schema = null)
+    public OutboxRelay(NpgsqlDataSource db, IEventPublisher publisher, string? schema = null)
     {
         _db = db;
-        _channel = channel;
-        _exchange = exchange;
+        _publisher = publisher;
         _s = Schema.Name(schema);
-        _channel.ConfirmSelect();
     }
 
     private sealed record Claimed(string Id, string TenantId, string EventType, string Payload, string? Traceparent);
@@ -48,22 +45,14 @@ public sealed class OutboxRelay
         var published = 0;
         foreach (var row in batch)
         {
-            using var activity = Telemetry.Source.StartActivity($"{_exchange} publish", ActivityKind.Producer, Telemetry.ParentFrom(row.Traceparent));
-            activity?.SetTag("messaging.system", "rabbitmq");
-            activity?.SetTag("messaging.destination.name", _exchange);
+            using var activity = Telemetry.Source.StartActivity($"{_publisher.Destination} publish", ActivityKind.Producer, Telemetry.ParentFrom(row.Traceparent));
+            activity?.SetTag("messaging.system", _publisher.MessagingSystem);
+            activity?.SetTag("messaging.destination.name", _publisher.Destination);
             activity?.SetTag("messaging.message.id", row.Id);
             activity?.SetTag("tenant.id", row.TenantId);
             try
             {
-                var props = _channel.CreateBasicProperties();
-                props.MessageId = row.Id;
-                props.Persistent = true;
-                props.ContentType = "application/json";
-                props.Type = row.EventType;
-                props.Headers = new Dictionary<string, object> { ["tenant_id"] = row.TenantId };
-                if (Telemetry.TraceparentOf(activity) is { } traceparent) props.Headers["traceparent"] = traceparent;
-                _channel.BasicPublish(_exchange, row.EventType, props, Encoding.UTF8.GetBytes(row.Payload));
-                _channel.WaitForConfirmsOrDie(TimeSpan.FromSeconds(10));
+                await _publisher.PublishAsync(new BrokerMessage(row.Id, row.EventType, row.TenantId, Telemetry.TraceparentOf(activity), Encoding.UTF8.GetBytes(row.Payload)), ct);
                 await CommandService.Exec(conn, $"UPDATE {_s}.ghk_outbox SET published_at = now(), claimed_until = NULL WHERE id = $1 AND claimed_by = $2", ct, row.Id, workerId);
                 published++;
             }

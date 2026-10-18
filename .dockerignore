@@ -1,0 +1,16 @@
+.git
+.ghe
+.env
+.env.*
+!.env.example
+prompts
+**/*.ghk-new
+docker-compose*.yml
+Dockerfile
+.dockerignore
+*.md
+bin
+obj
+**/bin
+**/obj
+tests

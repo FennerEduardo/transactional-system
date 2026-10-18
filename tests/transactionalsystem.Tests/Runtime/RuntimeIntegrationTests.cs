@@ -5,12 +5,14 @@ using transactionalsystem.Runtime;
 using Npgsql;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
-using RabbitMQ.Client;
 using Xunit;
 
 namespace transactionalsystem.Tests.Runtime;
 
-/// <summary>Runtime integration tests (docs/RUNTIME-KERNEL.md, IT1-IT7). Requires DATABASE_URL and AMQP_URL.</summary>
+/// <summary>
+/// Runtime integration tests (docs/RUNTIME-KERNEL.md, IT1-IT7). Requires DATABASE_URL and the selected broker
+/// (GHK_BROKER: rabbitmq with AMQP_URL, pubsub with PUBSUB_PROJECT_ID [+ PUBSUB_EMULATOR_HOST], servicebus).
+/// </summary>
 [Trait("Category", "Integration")]
 [Collection("runtime")]
 public sealed class RuntimeIntegrationTests : IAsyncLifetime
@@ -18,30 +20,62 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
     private const string Command = "process_transactional_system";
     private const string Event = "TransactionalSystemProcessed";
     private readonly NpgsqlDataSource _db;
-    private readonly IConnection _amqp;
     private readonly string _schema;
-    private readonly Topology _topology;
+    private readonly string _uid;
+    private IBroker _broker = null!;
+    private Topology _topology = null!;
 
     public RuntimeIntegrationTests()
     {
         var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-        var amqpUrl = Environment.GetEnvironmentVariable("AMQP_URL");
-        if (string.IsNullOrEmpty(dbUrl) || string.IsNullOrEmpty(amqpUrl))
-            throw new InvalidOperationException("Integration tests need DATABASE_URL and AMQP_URL (see docs/RUNTIME-KERNEL.md).");
+        if (string.IsNullOrEmpty(dbUrl) || !Brokers.Configured())
+            throw new InvalidOperationException("Integration tests need DATABASE_URL and the broker variables (see docs/RUNTIME-KERNEL.md).");
         _db = Connections.FromUrl(dbUrl);
-        _amqp = new ConnectionFactory { Uri = new Uri(amqpUrl) }.CreateConnection();
-        var uid = Guid.NewGuid().ToString("N")[..12];
-        _schema = $"it_{uid}";
-        _topology = Topology.ForPrefix($"it-{uid}");
+        _uid = Guid.NewGuid().ToString("N")[..12];
+        _schema = $"it_{_uid}";
     }
 
-    public Task InitializeAsync() => Schema.MigrateAsync(_db, _schema);
+    public async Task InitializeAsync()
+    {
+        await Schema.MigrateAsync(_db, _schema);
+        _broker = await Brokers.ConnectAsync();
+        // Brokers with fixed entities (Service Bus emulator) share one topology, emptied before each test.
+        _topology = _broker.DynamicTopology ? Topology.ForPrefix($"it-{_uid}") : Topology.ForPrefix("it");
+        await _broker.DeclareAsync(_topology);
+        if (!_broker.DynamicTopology)
+        {
+            await Receive(_topology.Queue, 0);
+            await Receive(_topology.Dlq, 0);
+        }
+    }
 
     public async Task DisposeAsync()
     {
         await using (var cmd = _db.CreateCommand($"DROP SCHEMA IF EXISTS {_schema} CASCADE")) await cmd.ExecuteNonQueryAsync();
-        _amqp.Dispose();
+        await _broker.DisposeAsync();
         await _db.DisposeAsync();
+    }
+
+    /// <summary>Receives and acknowledges messages until the expected number arrived and the source stays quiet for 500 ms (10 s at most).</summary>
+    private async Task<List<BrokerMessage>> Receive(string source, int expected)
+    {
+        var received = new List<BrokerMessage>();
+        await using var subscription = await _broker.SubscribeAsync(source, _topology);
+        var deadline = DateTime.UtcNow.AddSeconds(10);
+        var quietSince = DateTime.UtcNow;
+        while (DateTime.UtcNow < deadline && (received.Count < expected || DateTime.UtcNow - quietSince < TimeSpan.FromMilliseconds(500)))
+        {
+            var delivery = await subscription.PollAsync();
+            if (delivery is null)
+            {
+                await Task.Delay(50);
+                continue;
+            }
+            received.Add(delivery.Message);
+            await delivery.Ack();
+            quietSince = DateTime.UtcNow;
+        }
+        return received;
     }
 
     private async Task<long> Count(string table, string where = "true", params object[] args)
@@ -49,23 +83,6 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
         await using var cmd = _db.CreateCommand($"SELECT count(*) FROM {_schema}.{table} WHERE {where}");
         foreach (var a in args) cmd.Parameters.Add(new NpgsqlParameter { Value = a });
         return (long)(await cmd.ExecuteScalarAsync())!;
-    }
-
-    private static List<BasicGetResult> DrainQueue(IModel channel, string queue)
-    {
-        var messages = new List<BasicGetResult>();
-        for (var m = channel.BasicGet(queue, autoAck: true); m is not null; m = channel.BasicGet(queue, autoAck: true)) messages.Add(m);
-        return messages;
-    }
-
-    private static async Task WaitFor(Func<bool> check)
-    {
-        var deadline = DateTime.UtcNow.AddSeconds(10);
-        while (!check())
-        {
-            if (DateTime.UtcNow > deadline) throw new TimeoutException("Timed out waiting for condition");
-            await Task.Delay(50);
-        }
     }
 
     [Fact]
@@ -100,12 +117,10 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
     {
         var service = new CommandService(_db, _schema);
         for (var i = 0; i < 20; i++) await service.HandleAsync(new("t1", $"agg-{i}", Command));
-        using var setup = _amqp.CreateModel();
-        _topology.Declare(setup);
         async Task<int> Drain(string worker)
         {
-            using var channel = _amqp.CreateModel();
-            var relay = new OutboxRelay(_db, channel, _topology.Exchange, _schema);
+            await using var publisher = await _broker.PublisherAsync(_topology.Exchange);
+            var relay = new OutboxRelay(_db, publisher, _schema);
             var total = 0;
             for (var n = await relay.PublishBatchAsync(worker, 3); n > 0; n = await relay.PublishBatchAsync(worker, 3)) total += n;
             return total;
@@ -113,8 +128,9 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
         var totals = await Task.WhenAll(Task.Run(() => Drain("relay-a")), Task.Run(() => Drain("relay-b")));
         Assert.Equal(20, totals.Sum());
         Assert.Equal(0, await Count("ghk_outbox", "published_at IS NULL"));
-        await WaitFor(() => setup.QueueDeclarePassive(_topology.Queue).MessageCount == 20);
-        Assert.Equal(20, DrainQueue(setup, _topology.Queue).Select(m => m.BasicProperties.MessageId).Distinct().Count());
+        var received = await Receive(_topology.Queue, 20);
+        Assert.Equal(20, received.Count);
+        Assert.Equal(20, received.Select(m => m.MessageId).Distinct().Count());
     }
 
     [Fact]
@@ -148,27 +164,23 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
     [Fact]
     public async Task IT6_InboxDeduplicatesAndDeadLetters()
     {
-        using var channel = _amqp.CreateModel();
-        _topology.Declare(channel);
         var handled = new List<string>();
-        var consumer = new InboxConsumer(_db, channel, _topology.Queue, "it-consumer", (json, meta) =>
+        await using (var publisher = await _broker.PublisherAsync(_topology.Exchange))
+        await using (var subscription = await _broker.SubscribeAsync(_topology.Queue, _topology))
         {
-            if (json.TryGetProperty("poison", out _)) throw new InvalidOperationException("cannot process");
-            handled.Add(meta.MessageId);
-            return Task.CompletedTask;
-        }, _schema);
-        foreach (var (id, body) in new[] { ("m-1", "{\"ok\": true}"), ("m-1", "{\"ok\": true}"), ("m-poison", "{\"poison\": true}") })
-        {
-            var props = channel.CreateBasicProperties();
-            props.MessageId = id;
-            props.Headers = new Dictionary<string, object> { ["tenant_id"] = "t1" };
-            channel.BasicPublish(_topology.Exchange, "Test", props, Encoding.UTF8.GetBytes(body));
+            var consumer = new InboxConsumer(_db, subscription, "it-consumer", (json, meta) =>
+            {
+                if (json.TryGetProperty("poison", out _)) throw new InvalidOperationException("cannot process");
+                handled.Add(meta.MessageId);
+                return Task.CompletedTask;
+            }, _schema);
+            foreach (var (id, body) in new[] { ("m-1", "{\"ok\": true}"), ("m-1", "{\"ok\": true}"), ("m-poison", "{\"poison\": true}") })
+                await publisher.PublishAsync(new BrokerMessage(id, "Test", "t1", null, Encoding.UTF8.GetBytes(body)));
+            await consumer.DrainAsync(TimeSpan.FromSeconds(1));
         }
-        await consumer.DrainAsync(TimeSpan.FromSeconds(1));
         Assert.Equal(new[] { "m-1" }, handled);
         Assert.Equal(1, await Count("ghk_inbox", "consumer = $1", "it-consumer"));
-        await WaitFor(() => channel.QueueDeclarePassive(_topology.Dlq).MessageCount == 1);
-        Assert.Equal(new[] { "m-poison" }, DrainQueue(channel, _topology.Dlq).Select(m => m.BasicProperties.MessageId));
+        Assert.Equal(new[] { "m-poison" }, (await Receive(_topology.Dlq, 1)).Select(m => m.MessageId));
     }
 
     [Fact]
@@ -180,12 +192,11 @@ public sealed class RuntimeIntegrationTests : IAsyncLifetime
         await service.HandleAsync(new("t1", "agg-1", Command, Traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"));
         await using (var cmd = _db.CreateCommand($"SELECT traceparent FROM {_schema}.ghk_outbox"))
             Assert.Contains("4bf92f3577b34da6a3ce929d0e0e4736", (string)(await cmd.ExecuteScalarAsync())!);
-        using var channel = _amqp.CreateModel();
-        _topology.Declare(channel);
-        Assert.Equal(1, await new OutboxRelay(_db, channel, _topology.Exchange, _schema).PublishBatchAsync("relay", 10));
+        await using (var publisher = await _broker.PublisherAsync(_topology.Exchange))
+            Assert.Equal(1, await new OutboxRelay(_db, publisher, _schema).PublishBatchAsync("relay", 10));
         var received = 0;
-        using var consumerChannel = _amqp.CreateModel();
-        await new InboxConsumer(_db, consumerChannel, _topology.Queue, "trace-consumer", (_, _) => { received++; return Task.CompletedTask; }, _schema).DrainAsync(TimeSpan.FromSeconds(1));
+        await using (var subscription = await _broker.SubscribeAsync(_topology.Queue, _topology))
+            await new InboxConsumer(_db, subscription, "trace-consumer", (_, _) => { received++; return Task.CompletedTask; }, _schema).DrainAsync(TimeSpan.FromSeconds(1));
         Assert.Equal(1, received);
         provider!.ForceFlush();
 
