@@ -43,8 +43,8 @@ public interface IBroker : IAsyncDisposable
 /// <summary>
 /// The event broker behind the outbox relay and the inbox consumer, chosen at run time so one image runs on any
 /// cloud: GHK_BROKER=rabbitmq (AMQP_URL), pubsub (PUBSUB_PROJECT_ID or GOOGLE_CLOUD_PROJECT; PUBSUB_EMULATOR_HOST)
-/// or servicebus (SERVICEBUS_NAMESPACE or SERVICEBUS_CONNECTION_STRING). Without GHK_BROKER the configured
-/// variables decide, then stack.messaging.
+/// servicebus (SERVICEBUS_NAMESPACE or SERVICEBUS_CONNECTION_STRING) or kafka (KAFKA_BOOTSTRAP_SERVERS), when
+/// generated. Without GHK_BROKER the configured variables decide, then stack.messaging.
 /// </summary>
 public static class Brokers
 {
@@ -59,6 +59,7 @@ public static class Brokers
         if (Env("AMQP_URL") is not null) return "rabbitmq";
         if (Env("PUBSUB_PROJECT_ID") is not null || Env("PUBSUB_EMULATOR_HOST") is not null) return "pubsub";
         if (Env("SERVICEBUS_CONNECTION_STRING") is not null || Env("SERVICEBUS_NAMESPACE") is not null) return "servicebus";
+        if (Env("KAFKA_BOOTSTRAP_SERVERS") is not null) return "kafka";
         return DefaultKind;
     }
 
@@ -67,6 +68,7 @@ public static class Brokers
     {
         "pubsub" => Env("PUBSUB_PROJECT_ID") is not null || Env("GOOGLE_CLOUD_PROJECT") is not null,
         "servicebus" => Env("SERVICEBUS_CONNECTION_STRING") is not null || Env("SERVICEBUS_NAMESPACE") is not null,
+        "kafka" => Env("KAFKA_BOOTSTRAP_SERVERS") is not null,
         _ => Env("AMQP_URL") is not null
     };
 
@@ -75,7 +77,8 @@ public static class Brokers
         "rabbitmq" => (IBroker)await RabbitMqBroker.ConnectAsync(Env("AMQP_URL") ?? throw new InvalidOperationException("AMQP_URL is not set (amqp://user:password@host:5672)")),
         "pubsub" => (IBroker)PubSubBroker.FromEnv(),
         "servicebus" => throw new InvalidOperationException("The Azure Service Bus adapter is not generated: set stack.messaging to \"servicebus\" and regenerate"),
-        var kind => throw new InvalidOperationException($"Unsupported GHK_BROKER: {kind} (rabbitmq, pubsub, servicebus)")
+        "kafka" => throw new InvalidOperationException("The Kafka adapter is not generated: set stack.messaging to \"kafka\" and regenerate"),
+        var kind => throw new InvalidOperationException($"Unsupported GHK_BROKER: {kind} (rabbitmq, pubsub, servicebus, kafka)")
     };
 }
 

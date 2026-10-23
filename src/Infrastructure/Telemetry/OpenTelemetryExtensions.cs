@@ -1,53 +1,34 @@
-// --------------------------------------------------------------------------
-// Executable OpenTelemetry & OTLP Configuration (.NET 8/9)
-// --------------------------------------------------------------------------
-using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetry.Metrics;
 
-namespace transactionalsystem.Infrastructure.Telemetry
+namespace transactionalsystem.Infrastructure.Telemetry;
+
+public static class OpenTelemetryExtensions
 {
-    public static class OpenTelemetryExtensions
+    /// <summary>Exports traces over OTLP/HTTP when OTEL_EXPORTER_OTLP_ENDPOINT is set; otherwise does nothing.</summary>
+    public static IServiceCollection AddServiceTelemetry(this IServiceCollection services, IConfiguration configuration, string sourceName, string defaultServiceName)
     {
-        public static IServiceCollection AddCustomOpenTelemetry(this IServiceCollection services, IConfiguration configuration, string serviceName)
-        {
-            var otlpEndpoint = configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://localhost:4317";
+        var endpoint = configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+        if (string.IsNullOrWhiteSpace(endpoint)) return services;
+        var serviceName = configuration["OTEL_SERVICE_NAME"] is { Length: > 0 } name ? name : defaultServiceName;
 
-            Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
-
-            services.AddOpenTelemetry()
-                .ConfigureResource(resource => resource
-                    .AddService(serviceName: serviceName, serviceVersion: "1.0.0")
-                    .AddTelemetrySdk())
-                .WithTracing(tracing =>
+        Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
+        services.AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService(serviceName))
+            .WithTracing(tracing => tracing
+                .AddSource(sourceName)
+                .AddAspNetCoreInstrumentation(options => options.RecordException = true)
+                .AddHttpClientInstrumentation()
+                .AddOtlpExporter(options =>
                 {
-                    tracing
-                        .AddAspNetCoreInstrumentation(opts => opts.RecordException = true)
-                        .AddHttpClientInstrumentation()
-                        .AddSource(serviceName)
-                        .AddOtlpExporter(otlpOptions =>
-                        {
-                            otlpOptions.Endpoint = new Uri(otlpEndpoint);
-                        });
-                })
-                .WithMetrics(metrics =>
-                {
-                    metrics
-                        .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation()
-                        .AddRuntimeInstrumentation()
-                        .AddOtlpExporter(otlpOptions =>
-                        {
-                            otlpOptions.Endpoint = new Uri(otlpEndpoint);
-                        });
-                });
-
-            return services;
-        }
+                    options.Protocol = OtlpExportProtocol.HttpProtobuf;
+                    options.Endpoint = new Uri(endpoint.TrimEnd('/') + "/v1/traces");
+                }));
+        return services;
     }
 }
