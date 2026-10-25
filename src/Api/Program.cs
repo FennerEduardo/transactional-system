@@ -16,6 +16,10 @@ builder.Services.AddHostedService<OutboxRelayWorker>();
 builder.Services.AddServiceTelemetry(builder.Configuration, Telemetry.Source.Name, "transactional-system");
 
 var app = builder.Build();
+// The kernel's tables, before serving or relaying (idempotent, serialized across replicas).
+// GHK_MIGRATE=false when a migration job owns the schema; without DATABASE_URL (unit tests) nothing to migrate.
+if (app.Configuration["DATABASE_URL"] is not null && app.Configuration["GHK_MIGRATE"] != "false")
+    await Schema.MigrateAsync(app.Services.GetRequiredService<NpgsqlDataSource>());
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 app.MapTransactionalSystemEndpoints();
 app.Run();

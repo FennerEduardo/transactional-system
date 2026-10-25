@@ -1,0 +1,370 @@
+{
+  "version": "2",
+  "cliVersion": "3.2.1",
+  "features": {
+    "features/transactional-system.feature": {
+      "checksum": "a5b7ba91b09662e3587bb3cb083d37b7387f7c4f155eae39254605b578199355",
+      "contracts": {
+        "contracts/transactional-system/ADR-TransactionalSystem.md": "003d4a15872836f8759daba87f88c8f12a52566bc1097b3b4c9d3c3845250acb",
+        "contracts/transactional-system/openapi.json": "931a1e8d0a246bd4cc37e6798b415df888fa46824b8528bb7fe19a82a74647a7",
+        "openapi.json": "9b52927f38b4bc3525a98f99f3293d512028c50c042176b3fc4b145489b2ede9",
+        "contracts/transactional-system/asyncapi.json": "5717dfff015b7d1283d595bfc37febd4714ac21ac2c335c74889b4ce8ddc12dc",
+        "asyncapi.json": "40923e6dedd4a9bdd30e9ed3553a8a946671afac767798c2bb5e459cc23d154d",
+        "transactionalsystem.contract.cs": "36aa4619cab5737f90f02c11bed03408e290a9d2ca691f8e39a9e856f23c821d"
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "filePath": ".dockerignore",
+      "type": "test",
+      "checksum": "81525389c36dc1fd779b3b4b16a2a874239910c8585e3fc7207d34ff32dc40ff",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": ".env.example",
+      "type": "config",
+      "checksum": "3b0150d10b000a75ac180eeea31d2d471b01da16d100ec8dd5a6233b17f21cb7",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "ADR-001-architecture-decisions.md",
+      "type": "other",
+      "checksum": "003d4a15872836f8759daba87f88c8f12a52566bc1097b3b4c9d3c3845250acb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "asyncapi.json",
+      "type": "contract",
+      "checksum": "40923e6dedd4a9bdd30e9ed3553a8a946671afac767798c2bb5e459cc23d154d",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "contracts/transactional-system/ADR-TransactionalSystem.md",
+      "type": "other",
+      "checksum": "003d4a15872836f8759daba87f88c8f12a52566bc1097b3b4c9d3c3845250acb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "contracts/transactional-system/asyncapi.json",
+      "type": "contract",
+      "checksum": "5717dfff015b7d1283d595bfc37febd4714ac21ac2c335c74889b4ce8ddc12dc",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "contracts/transactional-system/openapi.json",
+      "type": "openapi",
+      "checksum": "931a1e8d0a246bd4cc37e6798b415df888fa46824b8528bb7fe19a82a74647a7",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "docker-compose.yml",
+      "type": "config",
+      "checksum": "37e08cce44ed9043528b2ddf1ead84f17409d7f57aea485f268ad18c8f165168",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "Dockerfile",
+      "type": "test",
+      "checksum": "fdf8ea54edee61ab1c4ef9adf50e8cbf1be6249d040cfb8fbbe84ac0732bbcfb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "fixtures.ts",
+      "type": "fixture",
+      "checksum": "14d862f5a78df53ab2a8928c224f671a729e838b225400841f0f961bfa29ddef",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/bin/app.ts",
+      "type": "config",
+      "checksum": "625a30128dae99eca6f54a3d6df5adcd7bbd7786f95f6e65b286f7ecd77996bb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/cdk.json",
+      "type": "config",
+      "checksum": "29cad8457f480dfc7e092970f2e32db3f9223225c5c1b10a7fe14f159df99be9",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/lib/transactional-system-stack.ts",
+      "type": "config",
+      "checksum": "fee7b77e29f8e087aaed518dd18db38a8fd939c942bafaedb740ad2ac7c0a296",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/package.json",
+      "type": "config",
+      "checksum": "28e0f6dcbddee642b0062f0249bc6f1df1c4cc6d6d4488676e6c398fd2cafbf7",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/test/stack.test.ts",
+      "type": "config",
+      "checksum": "7a6ab854ff5580cf8c663a758e719d9ca5a6051eca4e889931545be1c0b92f43",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "infrastructure/tsconfig.json",
+      "type": "config",
+      "checksum": "b6463b973367b47d1a7457bf19e7b718ae736b81d8d1d72478ea20933d26170f",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "openapi.json",
+      "type": "openapi",
+      "checksum": "9b52927f38b4bc3525a98f99f3293d512028c50c042176b3fc4b145489b2ede9",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "prompts/backend-agent.md",
+      "type": "prompt",
+      "checksum": "0659a3202a91dc1a29cdee067d5f8510164854a824d95e285d2db255170e2f1c",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "prompts/domain-agent.md",
+      "type": "prompt",
+      "checksum": "7af94edb2f4fdbeebeec16dea49cda6fe56ab642b77949213e85126f05483fe9",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "prompts/qa-agent.md",
+      "type": "prompt",
+      "checksum": "984db8a50175640f4d0bd0f3cab61a5871269b9c2798b13d35d4db0df71218f7",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "seed.sql",
+      "type": "fixture",
+      "checksum": "6d147448df0dfb1a07cb0cbe5464cf7d798616570479821824b3fb86461f79f6",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/AppHost/Program.cs",
+      "type": "test",
+      "checksum": "de18050a26a21c03e5d9b40beec65cb09d0f408b8a30733d81ef9bc6c28d5e58",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/Auth/JwtTenant.cs",
+      "type": "test",
+      "checksum": "795bb844a5be6e53251d2e9e4989a4054ac6d60d22bdca174645e49c0a2bf9bf",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/Program.cs",
+      "type": "test",
+      "checksum": "580ce3b147f4e17d599f15a4156234010c3e0db8284fbda3ff6962bb2f0d6b77",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/ServiceDefaults/Extensions.cs",
+      "type": "test",
+      "checksum": "f5c488c2ba940fc77f9d03bbb25190d83090f66033cf1cb9b2cc60423bddc46f",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/TransactionalSystemEndpoints.cs",
+      "type": "test",
+      "checksum": "d765360a5406c04f9cf8f0164ed595712a407e723bcd208d1fb805128f215358",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Api/Workers/OutboxRelayWorker.cs",
+      "type": "test",
+      "checksum": "c26d1efc5191ce199011cda87d64be24f70781605443b17732d10a9517dd6679",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Domain/Kernel/DomainValidationException.cs",
+      "type": "test",
+      "checksum": "75f93a5825c664e167377fce1e7796e5e422a0ca18c26d08e5fa6549d9cf8053",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Domain/Kernel/TransactionalSystemAggregate.cs",
+      "type": "test",
+      "checksum": "2f87f8741a8c7799320864a0cf8d7df12460f7e893cb14ec02398475420905eb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Infrastructure/Realtime/SignalRNotificationService.cs",
+      "type": "test",
+      "checksum": "0354ca81890f1bfbc17496914229f99ab67b1603df9d6d86ebe0e31e154c7b24",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Infrastructure/Resilience/ResilienceExtensions.cs",
+      "type": "test",
+      "checksum": "e86c072a7e682a759e3e9d132acc7a6ec1292886ea5ec2307fa6afa55af2b189",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Infrastructure/Telemetry/OpenTelemetryExtensions.cs",
+      "type": "test",
+      "checksum": "523c5081806ac8daa73ff4a7be49f0a1c9a15e69c2510579b65d8b146827554e",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/Brokers.cs",
+      "type": "test",
+      "checksum": "0a37783994014cbb26ad31a6c63b8e061ee3e5c7d9365266cf4ddd97574e7040",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/CommandService.cs",
+      "type": "test",
+      "checksum": "87ec8a140fd8f4c1204f275d00a2d9bace6db97fadba188a4362773fb4a2204d",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/Connections.cs",
+      "type": "test",
+      "checksum": "e3a28cacfa10ef1f8613cfdfb9f0548257628fea580eca17199c09fb89751511",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/InboxConsumer.cs",
+      "type": "test",
+      "checksum": "d75c40e5ae5538a3297700b357d855fdeffcfc0b3e9fc9a564120ad151186bdb",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/OutboxRelay.cs",
+      "type": "test",
+      "checksum": "cfae6867ddf6fb946822d3457e77730fe59ce35f5809b64b1986d0a2a4b7a414",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/SagaOrchestrator.cs",
+      "type": "test",
+      "checksum": "63575dcb8d4709d836f02505f7a3c865924bde5d5fcb30aed0e72b486589c93b",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/Schema.cs",
+      "type": "test",
+      "checksum": "f76f8ccdb6c0c3f212de3b59928d79467694cc634137fb63f635ed4af571b59b",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/Telemetry.cs",
+      "type": "test",
+      "checksum": "d26cf07aae3e32f010dc6c62047001ee3100dbe115adc1e28ae8dbfef49da7bf",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "src/Runtime/Topology.cs",
+      "type": "test",
+      "checksum": "e64b8942bceaf6b4d1c1da49ac14f64d3cbad557676a66db0af6af8195da3de8",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/Api/TransactionalSystemHttpTests.cs",
+      "type": "test",
+      "checksum": "f364c4bc87c474bab1b4c6aebc99d0340ec9d86f642c590924e6fd7cd56e9290",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/Domain/TransactionalSystemAggregateTests.cs",
+      "type": "test",
+      "checksum": "d71ae4d08382ad978f05f6f383494835f0e4c44396becc639f724e8776506c8f",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/reqnroll.json",
+      "type": "test",
+      "checksum": "cf42817fa5fb5cac3e6b328ea2211a1658502eaf4ac33749ac1c445340e93a19",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/Runtime/RuntimeIntegrationTests.cs",
+      "type": "test",
+      "checksum": "319c0a4344d0b7400c8b492db9e8bca846f9e570ebd4f2b82d36b947cbfdb892",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/Steps/TransactionalSystemStepDefinitions.cs",
+      "type": "test",
+      "checksum": "740650fe62816e6069c43c1a3c86ba260168ea79552fc7e4c956d2014dbc252c",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "tests/transactionalsystem.Tests/transactionalsystem.Tests.csproj",
+      "type": "test",
+      "checksum": "baef33d130340de5ad2d84b1caf8ecdbcc43ebe71dd3c42140a13ce338cf2877",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "transactional-system.csproj",
+      "type": "config",
+      "checksum": "30ba2f334a8e8c252f3283bd1ec8fa4cf85e3c6d4aa2d9f7ef617a8b9ec210c7",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "transactionalsystem.contract.cs",
+      "type": "contract",
+      "checksum": "36aa4619cab5737f90f02c11bed03408e290a9d2ca691f8e39a9e856f23c821d",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    },
+    {
+      "filePath": "validate.sh",
+      "type": "config",
+      "checksum": "c80ad713438a9e005581a604f2fff6a8ee494e354f9b520dccb720d8485e03df",
+      "feature": "features/transactional-system.feature",
+      "generatedAt": "2026-10-25T04:55:37.929Z"
+    }
+  ],
+  "executions": []
+}
