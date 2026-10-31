@@ -1,6 +1,6 @@
 {
   "version": "2",
-  "cliVersion": "3.2.1",
+  "cliVersion": "3.2.2",
   "features": {
     "features/transactional-system.feature": {
       "checksum": "a5b7ba91b09662e3587bb3cb083d37b7387f7c4f155eae39254605b578199355",
