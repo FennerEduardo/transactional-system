@@ -33,9 +33,13 @@ public sealed class InboxConsumer
     {
         var processed = 0;
         var idleSince = DateTime.UtcNow;
+        var first = true;
         while (DateTime.UtcNow - idleSince < idle)
         {
             var delivery = await _subscription.PollAsync(ct);
+            // The first poll can wait for the source to be ready (a Kafka consumer group joining): idle time counts
+            // from then, or a slow join would use up the whole idle window before anything is read.
+            if (first) { first = false; idleSince = DateTime.UtcNow; }
             if (delivery is null)
             {
                 await Task.Delay(50, ct);

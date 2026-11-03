@@ -1,6 +1,6 @@
 {
   "version": "2",
-  "cliVersion": "3.2.2",
+  "cliVersion": "3.3.0",
   "features": {
     "features/transactional-system.feature": {
       "checksum": "a5b7ba91b09662e3587bb3cb083d37b7387f7c4f155eae39254605b578199355",
@@ -263,9 +263,9 @@
     {
       "filePath": "src/Runtime/InboxConsumer.cs",
       "type": "test",
-      "checksum": "d75c40e5ae5538a3297700b357d855fdeffcfc0b3e9fc9a564120ad151186bdb",
+      "checksum": "2f720e330ea1debdf481c8855251774ca04f3be55f8fb667e11c9c57e256cb63",
       "feature": "features/transactional-system.feature",
-      "generatedAt": "2026-10-25T04:55:37.929Z"
+      "generatedAt": "2026-11-03T13:48:23.076Z"
     },
     {
       "filePath": "src/Runtime/OutboxRelay.cs",
